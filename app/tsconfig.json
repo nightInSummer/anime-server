@@ -1,0 +1,17 @@
+{
+  "version": "2.0.2",
+  "compilerOptions": {
+    "lib": ["es5", "es6", "dom"],
+    "target": "es6",
+    "jsx": "react",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

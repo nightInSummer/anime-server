@@ -1,0 +1,23 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "root",
+  "password": "110120119",
+  "database": "i18n-plat",
+  "synchronize": true,
+  "entities": [
+    "server/models/*.js"
+  ],
+  "subscribers": [
+    "server/subscriber/*.js"
+  ],
+  "migrations": [
+    "server/migration/*.js"
+  ],
+  "cli": {
+    "entitiesDir": "server/models",
+    "migrationsDir": "server/migration",
+    "subscribersDir": "server/subscriber"
+  }
+}

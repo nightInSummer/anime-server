@@ -1,0 +1,129 @@
+@import "../_base.scss";
+$sidebar-close-width: 88px;
+$sidebar-open-width: 200px;
+$sidebar-logo-bg-color: #252844;
+$sidebar-animation-time: 0.2s;
+
+@-webkit-keyframes sidebar-open {
+  from {
+    width: $sidebar-close-width;
+  }
+  to {
+    width: $sidebar-open-width;
+  }
+}
+
+@-webkit-keyframes sidebar-close {
+  from {
+    width: $sidebar-open-width;
+  }
+  to {
+    width: $sidebar-close-width;
+  }
+}
+
+.console-sidebar {
+  &.open {
+    width: $sidebar-open-width;
+    -webkit-animation: sidebar-open $sidebar-animation-time;
+  }
+
+  &.close {
+    width: $sidebar-close-width;
+    -webkit-animation: sidebar-close $sidebar-animation-time;
+    .logo-box .logo {
+      margin-left: 40px;
+    }
+  }
+
+  .logo-box {
+    height: 60px;
+    position: relative;
+    background-color: $sidebar-logo-bg-color;
+    overflow: hidden;
+
+    .logo {
+      display: inline-block;
+      height: 20px;
+      background: url(https://gw.alipayobjects.com/zos/rmsportal/DkKNubTaaVsKURhcVGkh.svg) no-repeat;
+      background-size: auto 20px;
+      margin-top: 20px;
+      margin-left: 50px;
+      width: 100px;
+      transition: margin-left $sidebar-animation-time;
+    }
+
+    .coast-arrow {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      cursor: pointer;
+      padding-left: 6px;
+      background-color: $sidebar-logo-bg-color;
+    }
+
+    .sidebar-switch {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 100%;
+      color: $gray;
+
+      &:hover {
+        background: $dark-purple;
+        color: $ghostwhite;
+      }
+    }
+  }
+}
+
+.sidebar-menu {
+  border: none;
+  .ant-menu-item {
+    border-right: none;
+    margin-left: 0;
+    left: 0;
+    font-size: 16px;
+    &.ant-menu-item-active, &.ant-menu-item-selected {
+      @extend %background-gradient;
+    }
+  }
+
+  .sidebar-menu-item {
+    height: 48px;
+    padding-left: 32px;
+    margin-top: 20px;
+
+    &-text {
+      display: inline-block;
+      margin-left: 20px;
+      opacity: 1;
+      letter-spacing: 1px;
+      transition: opacity $sidebar-animation-time;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      color: $white;
+      font-size: 14px;
+    }
+    a:hover {
+      color: $white;
+      text-decoration: none;
+    }
+
+    i {
+      font-size: 20px;
+      margin-right: 22px;
+    }
+  }
+
+
+  &.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: transparent;
+  }
+}

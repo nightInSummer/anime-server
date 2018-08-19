@@ -1,0 +1,32 @@
+{
+  "replaceConsole": true,
+  "appenders": {
+    "stdout": {
+      "type": "stdout"
+    },
+    "access": {
+      "type": "dateFile",
+      "filename": "logs/access",
+      "pattern": "-yyyy-MM-dd.log",
+      "alwaysIncludePattern": true,
+      "category": "http"
+    },
+    "err": {
+      "type": "dateFile",
+      "filename": "logs/error",
+      "pattern": "-yyyy-MM-dd.log",
+      "alwaysIncludePattern": true
+    },
+    "oth": {
+      "type": "dateFile",
+      "filename": "logs/other",
+      "pattern": "-yyyy-MM-dd.log",
+      "alwaysIncludePattern": true
+    }
+  },
+  "categories": {
+    "default": { "appenders": [ "stdout", "access" ], "level": "DEBUG" },
+    "err": { "appenders": [ "stdout", "err"], "level": "ERROR" },
+    "oth": { "appenders": [ "stdout", "oth"], "level": "INFO" }
+  }
+}

@@ -1,0 +1,83 @@
+@import "./_color";
+@import "./util";
+
+a {
+  transition: linear 0.2s background-color;
+}
+
+body {
+  font-size: 14px;
+  line-height: 18px;
+  font-family: "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+  color: $color-text;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: PingFangSC-Regular, Consolas, Menlo, Courier, monospace;
+  &::selection {
+    background: $green;
+  }
+}
+
+.btn-line {
+  overflow: hidden;
+  button, a {
+    display: inline-block;
+    margin-right: 20px;
+  }
+}
+
+.btn-line-rtl {
+  overflow: hidden;
+  button, a {
+    display: inline-block;
+    margin-left: 20px;
+    float: right;
+  }
+}
+
+.iconfont {
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 1;
+  margin-right: 4px;
+}
+.avatar {
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+}
+
+.page-tab-wrap {
+  .ant-tabs-bar {
+    margin-bottom: 30px;
+  }
+
+  .ant-tabs-ink-bar {
+    height: 4px;
+  }
+
+  .ant-tabs-nav .ant-tabs-tab {
+    padding: 13px 20px;
+  }
+
+  .ant-tabs-extra-content {
+    line-height: 49px;
+  }
+}
+.enter-box{position:absolute;top:0;right:0;bottom:0;left:0;background-color:#333759}
+.enter-loading{position:absolute;top:50%;left:50%;margin-top:-15px;margin-left:-105px;color:#fff;font-weight:700;font-size:30px;animation:loading 1s infinite alternate}
+@keyframes loading{0%{color:#fff}
+  to{color:#9998b1}
+}
+#content{position:absolute;width:100%;height:100%}
+.console{display:flex;min-height:100vh;font-size:14px}
+.console-sidebar{position:relative;z-index:1;width:200px;background:#333759;font-weight:300;font-size:1pc}
+.console-sidebar .sidebar-menu{border-right:none;background:0 0}
+.console-sidebar .sidebar-menu-item{background-color:transparent!important}
+.console-body{position:relative;background-color:#f4f5f9;flex:1}
+.console-header{height:60px}
+#main{position:absolute;top:63px;right:0;bottom:0;left:0;overflow:auto;padding:27px 30px 30px}

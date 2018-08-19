@@ -1,0 +1,71 @@
+// Color palette
+$white: #fff;
+$dark7: #dbdfe1;
+
+$main-text-color: #5b6681;
+$strong-text-color: #222f3c;
+$gray-color: #808695;
+
+$empty-text-color: #ccc;
+
+$primary-color: #4B9DED;
+
+$top-bar-shadow-color: rgba(192, 201, 218, 0.8);
+$icon-default-color: #b7bdc6;
+$left-bar-background: #ebeef3;
+$left-bar-icon-color: #b7bdc7;
+$side-bar-shadow-color: rgba(192, 201, 218, 0.3);
+
+$leftbar-li-background: #eaf2fd;
+
+$struct-border-color: #d5dce9;
+
+$hover-cover-0-color: #eaf3ff;
+$hover-cover-1-color: #ebf2fb;
+
+$page-selector-overlay-shadow: rgba(91, 102, 129, 0.2);
+$main-bgcolor: #f0f2f7;
+
+$mobile-page-container-width: 375px;
+
+$top-bar-height: 64px;
+
+$cancel-button-default-color: #dfe3ec;
+
+$hot-area-tip-bgcolor: #eaf2fd;
+$hot-area-bgcolor: #383e4d;
+$hot-area-mask-bgcolor: rgba(75, 157, 237, 0.7);
+$hot-area-mask-handler-border-color: #ced4dc;
+$input-active-color: #78bdfa;
+$input-active-shadow: rgba(75, 157, 237, 0.2);
+$property-input-placehold-color: #C0C9DA;
+$modal-input-placehold-color: #a3abb6;
+
+$component-warning-color: #d21d06;
+
+
+$left-bar-width: 60px;
+$component-bar-width: 262px;
+$right-bar-width: 470px;
+$struct-width: 200px;
+$icon-width: 30px;
+$component-bar-width-small: 240px;
+$right-bar-width-small: 420px;
+
+@mixin placeholderColor($color) {
+  &::placeholder {
+    color: $color;
+  }
+  &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: $color;
+  }
+  &::-moz-placeholder { /* Firefox 19+ */
+    color: $color;
+  }
+  &:-ms-input-placeholder { /* IE 10+ */
+    color: $color;
+  }
+  &:-moz-placeholder { /* Firefox 18- */
+    color: $color;
+  }
+}

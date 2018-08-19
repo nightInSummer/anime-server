@@ -1,0 +1,99 @@
+@import "../_base.scss";
+
+$header-shadow: 0 2px 6px 0 #D6D9E3;
+$header-color: #B6B6CE;
+$header-search-bg-color: #F1F4FD;
+
+.console-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  z-index: 10;
+  min-width: 700px;
+  padding: 0 30px;
+  background: $white;
+  color: $header-color;
+  box-shadow: $header-shadow;
+
+  .ant-breadcrumb {
+    font-size: 16px;
+    a:hover {
+      color: $color-primary;
+    }
+    .ant-breadcrumb-separator {
+      margin-left: 7px;
+      margin-right: 5px;
+      i {
+        margin-right: 0;
+        vertical-align: unset;
+      }
+    }
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+  }
+
+  .header-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+    &-input {
+      width: 140px;
+      height: 28px;
+      border-radius: 30px;
+      border: 1px solid $header-search-bg-color;
+      background: $header-search-bg-color;
+      outline: none;
+      padding-left: 62px;
+      transition: all 0.3s ease-in-out;
+      color: $gray;
+      &:focus {
+        width: 200px;
+        background: $white;
+        border-color: $color-primary;
+        padding-left: 32px;
+      }
+    }
+    input::-webkit-input-placeholder {
+      color: $header-color;
+    }
+    input::-moz-placeholder {
+      color: $header-color;
+    }
+
+    &-icon {
+      position: absolute;
+      left: 40px;
+      transition: left 0.3s ease-in-out;
+    }
+
+    &.focus {
+      .header-search-icon {
+        left: 10px;
+      }
+    }
+  }
+
+  .icon-box {
+    margin-right: 30px;
+    i {
+      color: $header-color;
+      font-size: 22px;
+    }
+  }
+
+  .ant-badge-dot {
+    height: 6px;
+    width: 6px;
+    border-width: 0;
+    left: 24px;
+    top: 1px;
+    box-shadow: 0 0 0 0;
+  }
+
+}

@@ -1,0 +1,19 @@
+@import "./_color";
+@import "./util";
+
+
+.en-US {
+  .sidebar-menu {
+    .ant-menu-item {
+      font-size: 14px;
+    }
+
+    .sidebar-menu-item-text {
+      margin-left: 5px;
+    }
+  }
+
+  .ant-form label {
+    font-size: 12px;
+  }
+}

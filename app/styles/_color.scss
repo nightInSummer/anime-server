@@ -1,0 +1,61 @@
+// Color palette
+$green: #46CC93 !default;
+$cyan: #50D1DA !default;
+$blue: #2D9EF1 !default;
+$purple: #5D48DF !default;
+$orange: #FFA518 !default;
+$yellow: #F4C254 !default;
+$red: #F56B6B !default;
+$navy: #333 !default;
+$gray: #666 !default;
+$darkgray: #999 !default;
+$lightgray: #BBB !default;
+$lightnavy: #CCD0D6 !default;
+$gainsboro: #D9DCE4 !default;
+$platinum: #E5E9EE !default;
+$whitesmoke: #F7F7F7 !default;
+$ghostwhite: #F9F9F9 !default;
+$white: #FFF !default;
+$dark-purple: #333759 !default;
+$light-purple: #7E5DEA !default;
+
+// Color primary
+$color-primary: $purple !default;
+
+// Color text
+$color-text-primary: $color-primary !default;
+$color-text: #343659 !default;
+$color-text-assist: #9998B1 !default;
+$color-text-secondary: #7C7C9E !default;
+$color-text-secondary-assist: $darkgray !default;
+
+// Color link
+$color-link: $color-primary !default;
+$color-link-assist: $navy !default;
+$color-link-secondary: $lightgray !default;
+
+// Color border
+$color-border: $platinum !default;
+$color-border-hover: $green !default;
+$color-border-light: $whitesmoke !default;
+$color-border-dark: $darkgray !default;
+
+// Color status
+$color-success: $green !default;
+$color-danger: $red !default;
+$color-warning: $orange !default;
+$color-info: $gray !default;
+$color-active: $color-primary;
+$color-disabled: $color-text-secondary;
+
+// Color decorator
+$color-hover: #F2F1FC;
+$color-background: #F4F5F9;
+$color-shadow: #9998B1 !default;
+$color-gradient-start: #613FDF;
+$color-gradient-end: #7641E1;
+
+// same with antd
+$base-line-height: 34px;
+$sm-line-height: 24px;
+$lg-line-height: 38px;
