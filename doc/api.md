@@ -13,7 +13,7 @@
 
 - 出参
 
-```json
+```js
 {
 	data: [{
 		id: 1,
@@ -41,7 +41,7 @@
 
 - 出参
 
-```json
+```js
 {
 	data: [{
 		id: 1,
@@ -68,7 +68,7 @@
 
 - 出参
 
-```json
+```js
 {
 	data: [{
 		id: 1,
@@ -102,7 +102,7 @@
 
 - 出参
 
-```json
+```js
 {
 	data: [{
 		id: 1,
@@ -131,7 +131,7 @@
 
 - 入参
 
-```json
+```js
 {
 	versionId: 1,
 	contentKey: 'x123x'
@@ -146,7 +146,7 @@
 
 - 出参
 
-```json
+```js
 {
 	data: true,	// 操作结果
 	statusNo: 1,	// 状态
@@ -166,7 +166,7 @@ version|String|test|required|版本号
 
 - 出参
 
-```json
+```js
 {
 	data: true,	// 操作结果
 	statusNo: 1,	// 状态
@@ -324,7 +324,7 @@ id|String|1|required|项目id
 	statusMsg: ''	// 状态文案
 }
 ```
-### 修改项目 
+### 修改项目
 
 > updateProject
 
