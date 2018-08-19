@@ -15,17 +15,17 @@
 
 ```js
 {
-	data: [{
-		id: 1,
-		title: ''
-		content: '',
-		createTime: '',
-		status: '' // status为1是已发布新闻，0是未发布新闻
-	},
-	...
-	],
-	statusMsg: '',
-	statusNo: 1
+  data: [{
+    id: 1,
+    title: ''
+    content: '',
+    createTime: '',
+    status: '' // status为1是已发布新闻，0是未发布新闻
+  },
+  ...
+  ],
+  statusMsg: '',
+  statusNo: 1
 }
 ```
 
