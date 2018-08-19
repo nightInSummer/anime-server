@@ -22,6 +22,13 @@ export default class Store {
     companyLoading: true
   }
 
+  @observable activity = {
+    activityList: [],
+    activityKeyList: [],
+    activityKeyModal: false,
+    activityValueModal: false,
+    activityLoading: true
+  }
 
   /**
    * 获取新闻列表
@@ -180,4 +187,99 @@ export default class Store {
       message.error(res.data)
     }
   }
+
+  /**
+   * 获取活动列表
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async getActivity(data): Promise<void> {
+    this.activity.activityLoading = true
+    const res = await API.activity.getActivityInfo({})
+    res.data.forEach((ret, i) => { ret['key'] = i + 1 })
+    this.activity.activityList = res.data
+    this.activity.activityLoading= false
+  }
+
+  /**
+   * 获取活动一级标题
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async getActivityKey(data): Promise<void> {
+    const res = await API.activity.getActivityKey({})
+    res.data.forEach((ret, i) => { ret['key'] = i + 1 })
+    this.activity.activityKeyList = res.data
+  }
+
+  /**
+   * 添加一级标题
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async saveActivityKey(data): Promise<void> {
+    const res = await API.activity.saveActivityKey(data)
+    if(res.statusNo) {
+      message.success('添加成功！')
+      this.activity.activityKeyModal = false
+      await this.getActivity({})
+      await this.getActivityKey({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 添加活动
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async saveActivityValue(data): Promise<void> {
+    const res = await API.activity.saveActivityValue(data)
+    if(res.statusNo) {
+      message.success('添加成功！')
+      this.activity.activityValueModal = false
+      await this.getActivity({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 删除一级
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async deleteActivityKey(data): Promise<void> {
+    const res = await API.activity.deleteCompanyKey(data)
+    if (res.statusNo) {
+      message.success('删除成功！')
+      await this.getActivity({})
+      await this.getActivityKey({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 删除活动
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async deleteActivityValue(data): Promise<void> {
+    const res = await API.activity.deleteCompanyValue(data)
+    if (res.statusNo) {
+      message.success('删除成功！')
+      await this.getActivity({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
 }

@@ -39,24 +39,14 @@ class Company extends React.Component<any, any>{
   }, {
     title: '操作',
     dataIndex: 'id',
-    render: (text, record) => {
-      if(record.status) {
-        return (
-          <span>
-            <Popconfirm title="确认删除?" onConfirm={ this.deleteNews.bind(this, text) } okText="是" cancelText="否">
-              <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
-            </Popconfirm>
-          </span>
-        )
-      } else {
-        return (
-          <span>
-            <Popconfirm title="确认删除?" onConfirm={ this.deleteNews.bind(this, text) } okText="是" cancelText="否">
-             <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
-            </Popconfirm>
-          </span>
-        )
-      }
+    render: (text) => {
+      return (
+        <span>
+          <Popconfirm title="确认删除?" onConfirm={ this.deleteNews.bind(this, text) } okText="是" cancelText="否">
+           <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
+          </Popconfirm>
+        </span>
+      )
     }
   }]
   constructor(props) {
@@ -93,12 +83,12 @@ class Company extends React.Component<any, any>{
     const { getFieldDecorator } = this.props.form
     return (
       <div id="main">
-        <Button type="primary" onClick={ this.showModal.bind(this) }>添加新闻</Button>
+        <Button type="primary" onClick={ this.showModal.bind(this) }>添加公司文章</Button>
         <div style={{ marginTop: 24 }}>
           <Table columns={this.columns as any} dataSource={companyList} />
         </div>
         <Modal
-          title="新建新闻"
+          title="新建公司文章"
           visible={ companyModal }
           onCancel={ this.handleCancel.bind(this) }
           onOk={ this.submitData.bind(this) }

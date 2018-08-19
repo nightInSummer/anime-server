@@ -1,6 +1,7 @@
 import * as NewsInfo from './controllers/News'
 import * as SowingInfo from './controllers/Sowing'
 import * as CompanyInfo from './controllers/Company'
+import * as ActivityInfo from './controllers/Activity'
 
 
 interface Routers {
@@ -60,5 +61,35 @@ export const AppRoutes: Array<Routers> = [
     path: '/company',
     method: 'delete',
     action: CompanyInfo.deleteCompany
+  },
+  {
+    path: '/activity',
+    method: 'get',
+    action: ActivityInfo.getActivity
+  },
+  {
+    path: '/activityKey',
+    method: 'get',
+    action: ActivityInfo.getActivityKey
+  },
+  {
+    path: '/activityKey',
+    method: 'post',
+    action: ActivityInfo.setActivityKey
+  },
+  {
+    path: '/activityValue',
+    method: 'post',
+    action: ActivityInfo.setActivityValue
+  },
+  {
+    path: '/activityKey',
+    method: 'delete',
+    action: ActivityInfo.deleteActivityKey
+  },
+  {
+    path: '/activityValue',
+    method: 'delete',
+    action: ActivityInfo.deleteActivityValue
   }
 ]
