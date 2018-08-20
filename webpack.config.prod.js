@@ -8,7 +8,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const StyleLintPlugin = require('stylelint-bare-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const config = require('./webpack.config.base')
 
@@ -36,8 +35,7 @@ config.plugins = [
   ]),
   new ManifestPlugin({
     fileName: 'manifest.json',
-  }),
-  new BundleAnalyzerPlugin({ analyzerPort: 8919 })
+  })
 ]
 
 
