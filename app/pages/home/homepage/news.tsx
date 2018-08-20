@@ -94,6 +94,7 @@ class News extends React.Component<any, any> {
 
   public submitData() {
     const result = this.props.form.getFieldsValue()
+
     this.props.saveNews({
       title: result.title,
       content: result.newsContent
@@ -104,7 +105,6 @@ class News extends React.Component<any, any> {
   render() {
     const { newsList, newsModal } = this.props.news
     const { getFieldDecorator } = this.props.form
-    const { content } = this.state
     return (
       <div>
         <Button type="primary" onClick={ this.showModal.bind(this) }>添加新闻</Button>

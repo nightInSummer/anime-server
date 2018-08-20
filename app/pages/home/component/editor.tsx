@@ -22,6 +22,7 @@ export default class Editor extends React.Component<any, any> {
   receiveHtml(content) {
     console.log("recieved HTML content", content);
     this.setState({responseList:[]});
+    this.props.onChange(content)
   }
   componentDidMount() {}
 
