@@ -11,7 +11,9 @@ export class CompanyInfo {
   title: string
 
   // 文章内容
-  @Column()
+  @Column('mediumtext',{
+    nullable: true
+  })
   content: string
 
   // 创建时间

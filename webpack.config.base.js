@@ -30,6 +30,7 @@ module.exports = {
           getCustomTransformers: () => ({
             before: [ tsImportPluginFactory({
               libraryName: 'antd',
+              libraryDirectory: 'es',
               style: 'css'
             }) ]
           })
@@ -38,8 +39,11 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
+        exclude: [
+          path.resolve(__dirname, "node_modules"),
+          path.resolve(__dirname, "app")
+        ]
       },
       {
         test: /\.scss$/,

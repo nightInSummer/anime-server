@@ -12,7 +12,9 @@ export class ActivityValue {
   title: string
 
   // 活动内容
-  @Column()
+  @Column('mediumtext',{
+    nullable: true
+  })
   content: string
 
   // 创建时间

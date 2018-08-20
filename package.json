@@ -91,7 +91,7 @@
   },
   "scripts": {
     "start": "concurrently --kill-others \"tsc -w\" \"nodemon server/index.js\" \"node node_modules/webpack-cli/bin/webpack.js --colors --config webpack.config --watch\"",
-    "prod": "tsc && node node_modules/webpack-cli/bin/webpack.js --colors --config webpack.config.prod",
+    "prod": "node node_modules/webpack-cli/bin/webpack.js --colors --config webpack.config.prod && tsc",
     "service": "node server/index.js"
   }
 }

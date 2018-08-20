@@ -11,7 +11,9 @@ export class NewsInfo {
   title: string
 
   // 新闻内容
-  @Column()
+  @Column('mediumtext',{
+    nullable: true
+  })
   content: string
 
   // 状态（0为未发布，1已发布）
