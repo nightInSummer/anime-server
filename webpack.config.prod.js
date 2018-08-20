@@ -30,10 +30,6 @@ config.plugins = [
     filename: 'css/style.[chunkhash:8].css',
     chunkFilename: 'css/style.[chunkhash:8].css'
   }),
-  new StyleLintPlugin({
-    syntax: 'scss',
-    failOnError: true,
-  }),
   new CopyWebpackPlugin([
     { from: './app/images', to: 'images' }
   ]),
