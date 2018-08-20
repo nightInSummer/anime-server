@@ -42,13 +42,21 @@ export default class Sidebar extends React.Component<{}, { pathname: String, sid
   }
 
   public componentDidMount() {
+    console.log(_.gePathname())
     this.setState({
       pathname: _.gePathname()
     })
   }
 
+  public changeTab(tab) {
+    this.setState({
+      pathname: tab
+    })
+  }
+
   public render() {
     const { menus, sidebarIsOpen, pathname } = this.state
+
     return (
       <div className={`console-sidebar ${sidebarIsOpen ? 'open' : 'close'}`}>
         <div className='logo-box'>
@@ -61,7 +69,7 @@ export default class Sidebar extends React.Component<{}, { pathname: String, sid
           {
             _.map(menus, (menu) => {
               const item = (
-                <a href={ menu.href }>
+                <a href={ `#/${menu.href}` } onClick={this.changeTab.bind(this, menu.href)}>
                   <Icon type={ menu.icon }/>
                   <div className='sidebar-menu-item-text'>{ menu.text }</div>
                 </a>

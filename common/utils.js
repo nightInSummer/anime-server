@@ -37,7 +37,7 @@ _.getQueryVariable = (variable) => {
 }
 
 _.gePathname = () => {
-  let pathname = typeof(window) === 'undefined' ? '' : window.location.pathname
+  let pathname = typeof(window) === 'undefined' ? '' : window.location.href.split('#')[1]
   return pathname.replace('/', '')
 }
 

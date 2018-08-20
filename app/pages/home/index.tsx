@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as ReactDom from 'react-dom'
 import { Provider } from 'mobx-react'
 import Routers from './routers'
-import { BrowserRouter } from "react-router-dom"
+import { HashRouter } from "react-router-dom"
 
 import Sidebar from '../../layouts/sidebar'
 
@@ -21,9 +21,9 @@ ReactDom.hydrate(
     <div className='console'>
       <Sidebar />
       <div className='console-body'>
-        <BrowserRouter>
+        <HashRouter>
           <Routers />
-        </BrowserRouter>
+        </HashRouter>
       </div>
     </div>
   </Provider>,
