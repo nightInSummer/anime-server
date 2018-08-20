@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Table, Popconfirm, Form, Modal, Input } from 'antd'
+import { Button, Table, Popconfirm, Form, Modal, Input, Upload, Icon } from 'antd'
 import moment from 'moment'
 import {inject, observer} from "mobx-react"
 
@@ -30,8 +30,11 @@ class Sowing extends React.Component<any, any> {
     title: '标题',
     dataIndex: 'title',
   }, {
-    title: '轮播图地址',
+    title: '轮播图',
     dataIndex: 'image',
+    render: (text) => {
+      return <a href='javascript:;' onClick={ this.showPhoto.bind(this, text) }>查看</a>
+    }
   }, {
     title: '跳转地址',
     dataIndex: 'url',
@@ -64,6 +67,11 @@ class Sowing extends React.Component<any, any> {
   }]
   constructor(props) {
     super(props)
+    this.state = {
+      previewVisible: false,
+      previewImage: '',
+      fileList: []
+    }
   }
 
   public componentDidMount() {
@@ -84,13 +92,43 @@ class Sowing extends React.Component<any, any> {
 
   public submitData() {
     const result = this.props.form.getFieldsValue()
+    const { fileList } = this.state
 
-    this.props.saveSowing(result)
+    this.props.saveSowing({
+      title: result.title,
+      url: result.url,
+      image: fileList[0].response[fileList[0].name]
+    })
+  }
+
+  handleCancelUpload = () => this.setState({ previewVisible: false })
+
+  handleChange = ({ fileList }) => this.setState({ fileList })
+
+  handlePreview = (file) => {
+    this.setState({
+      previewImage: file.url || file.thumbUrl,
+      previewVisible: true,
+    });
+  }
+
+  public showPhoto(url) {
+    this.handlePreview({ url })
   }
 
   render() {
     const { sowingList, sowingModal } = this.props.sowing
     const { getFieldDecorator } = this.props.form
+
+    const { previewVisible, previewImage, fileList } = this.state
+
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    )
+
     return (
       <div>
         <Button type="primary" onClick={ this.showModal.bind(this) }>添加轮播图</Button>
@@ -121,11 +159,16 @@ class Sowing extends React.Component<any, any> {
               {...formItemLayout}
               label="轮播图"
             >
-              {getFieldDecorator('image', {
-                initialValue: ''
-              })(
-                <Input placeholder="请输入新闻内容" />
-              )}
+              <Upload
+                action="/api/uploadImage"
+                listType="picture-card"
+                fileList={fileList}
+                onPreview={this.handlePreview}
+                onChange={this.handleChange}
+              >
+                {fileList.length >= 1 ? null : uploadButton}
+              </Upload>
+
             </FormItem>
             <FormItem
               {...formItemLayout}
@@ -138,6 +181,9 @@ class Sowing extends React.Component<any, any> {
               )}
             </FormItem>
           </Form>
+        </Modal>
+        <Modal visible={previewVisible} footer={null} onCancel={this.handleCancelUpload}>
+          <img alt="example" style={{ width: '100%' }} src={previewImage} />
         </Modal>
       </div>
     )

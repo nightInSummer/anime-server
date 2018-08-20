@@ -69,6 +69,19 @@ module.exports = {
           }
 
         ]
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
+        use: [{
+          loader:'file-loader',
+          options: {
+            name: '[path][name].[ext]', //path为相对于context的路径
+            context:'src',
+            publicPath:function(url){//返回最终的资源相对路径
+              return path.relative(path.resolve(__dirname, 'dist'), url).replace(/\\/g,'/');
+            }
+          }
+        }]
       }
     ]
   }

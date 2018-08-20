@@ -2,6 +2,10 @@ require.extensions['.scss'] = function cssModulesHook() {
   return {}
 }
 
+require.extensions['.css'] = function cssModulesHook() {
+  return {}
+}
+
 import * as React from 'react'
 import { renderToNodeStream } from 'react-dom/server'
 import { StaticRouter } from 'react-router-dom'

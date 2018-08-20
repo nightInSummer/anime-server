@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Button, Table, Popconfirm, Form, Modal, Input, Select } from 'antd'
 import moment from 'moment'
+import Editor from '../component/editor'
 import {inject, observer} from "mobx-react"
 
 const FormItem = Form.Item
@@ -9,11 +10,11 @@ const Option = Select.Option
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 5 },
+    sm: { span: 3 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 15 },
+    sm: { span: 20 },
   }
 }
 
@@ -161,7 +162,7 @@ class Company extends React.Component<any, any>{
           visible={ activityValueModal }
           onCancel={ this.handleCancel.bind(this, 'activityValueModal') }
           onOk={ this.submitData.bind(this, 'activityValue') }
-          width={'560px'}
+          width={'1100px'}
           cancelText="取消"
           okText="确定"
         >
@@ -197,7 +198,7 @@ class Company extends React.Component<any, any>{
               {getFieldDecorator('activityValueContent', {
                 initialValue: ''
               })(
-                <Input placeholder="请输入新闻标题" />
+                <Editor />
               )}
             </FormItem>
           </Form>

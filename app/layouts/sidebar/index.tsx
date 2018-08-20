@@ -16,7 +16,7 @@ export default class Sidebar extends React.Component<{}, { pathname: String, sid
   constructor(props: any) {
     super(props)
     this.state = {
-      pathname: 'homepage',
+      pathname: '',
       sidebarIsOpen: true,
       activeKey: '',
       menus: [{

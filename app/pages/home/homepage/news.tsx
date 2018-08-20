@@ -2,17 +2,19 @@ import * as React from 'react'
 import { Button, Table, Popconfirm, Form, Modal, Input } from 'antd'
 import moment from 'moment'
 import {inject, observer} from "mobx-react"
+import Editor from '../component/editor'
+import './news.scss'
 
 const FormItem = Form.Item
 
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
-    sm: { span: 5 },
+    sm: { span: 3 },
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 15 },
+    sm: { span: 20 },
   }
 }
 
@@ -62,8 +64,12 @@ class News extends React.Component<any, any> {
       }
     }
   }]
+
   constructor(props) {
     super(props)
+    this.state = {
+      content: ''
+    }
   }
 
   public componentDidMount() {
@@ -88,16 +94,17 @@ class News extends React.Component<any, any> {
 
   public submitData() {
     const result = this.props.form.getFieldsValue()
-
     this.props.saveNews({
       title: result.title,
       content: result.newsContent
     })
   }
 
+
   render() {
     const { newsList, newsModal } = this.props.news
     const { getFieldDecorator } = this.props.form
+    const { content } = this.state
     return (
       <div>
         <Button type="primary" onClick={ this.showModal.bind(this) }>添加新闻</Button>
@@ -109,7 +116,7 @@ class News extends React.Component<any, any> {
           visible={ newsModal }
           onCancel={ this.handleCancel.bind(this) }
           onOk={ this.submitData.bind(this) }
-          width={'560px'}
+          width={'1100px'}
           cancelText="取消"
           okText="确定"
         >
@@ -131,7 +138,7 @@ class News extends React.Component<any, any> {
               {getFieldDecorator('newsContent', {
                 initialValue: ''
               })(
-                <Input placeholder="请输入新闻内容" />
+                <Editor />
               )}
             </FormItem>
           </Form>
