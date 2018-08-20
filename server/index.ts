@@ -59,7 +59,7 @@ createConnection({
   "port": 3306,
   "username": "root",
   "password": "110120119",
-  "database": "anime-server",
+  "database": "anime_server",
   "synchronize": true,
   "entities": [
     __dirname + "/models/*.js"
