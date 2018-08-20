@@ -96,8 +96,8 @@ createConnection({
   app.use(renderServer)
 
 
-  app.listen(3000)
+  app.listen(8000)
 
-  logger.info("Koa application is up and running on port 3000")
+  logger.info("Koa application is up and running on port 8000")
 
   }).catch(error => errLog.error("TypeORM connection error: ", error))
