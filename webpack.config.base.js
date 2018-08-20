@@ -8,7 +8,7 @@ const tsImportPluginFactory = require('ts-import-plugin')
 const _ = require('./common/utils')
 const views = require('./app/view')
 
-const commons = ['react', 'lodash', 'antd', 'mobx', 'mobx-react', 'react-dom', 'react-router', 'react-router-dom']
+const commons = ['react', 'lodash', 'mobx', 'mobx-react', 'react-dom', 'react-router', 'react-router-dom']
 
 module.exports = {
   entry: { ..._.getEntity(views), commons },
@@ -42,7 +42,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: [
           path.resolve(__dirname, "node_modules"),
-          path.resolve(__dirname, "app")
+          path.resolve(__dirname, "app"),
         ]
       },
       {
