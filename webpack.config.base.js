@@ -7,7 +7,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const tsImportPluginFactory = require('ts-import-plugin')
 const _ = require('./common/utils')
 const views = require('./app/view')
-
 const commons = ['react', 'lodash', 'mobx', 'mobx-react', 'react-dom', 'react-router', 'react-router-dom']
 
 module.exports = {

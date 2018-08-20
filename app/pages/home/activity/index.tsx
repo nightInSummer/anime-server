@@ -56,7 +56,7 @@ class Company extends React.Component<any, any>{
     const columns = [
       { title: '序号', dataIndex: 'key', key: 'key' },
       { title: '标题', dataIndex: 'title', key: 'title' },
-      { title: '内容', dataIndex: 'content', key: 'content' },
+      { title: '内容', dataIndex: 'content', key: 'content', render: (text) =>  `${(text || '').slice(0,50)}...` },
       { title: '时间', dataIndex: 'createTime', key: 'createTime', render: (text) => moment(text).format('YYYY-MM-DD HH:mm:ss') },
       { title: '操作', dataIndex: 'id', key: 'id', render: (text) =>  (
         <span>

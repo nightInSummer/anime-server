@@ -41,7 +41,7 @@ export async function setActivityValue(ctx: Context): Promise<void> {
   })
   const newActivityValue = ActivityValueRepository.create(ctx.request.body)
   activityKey.activityValues = activityArr[0].activityValues.concat(newActivityValue)
-
+  console.log(111, activityKey)
   await activityKeyRepository.save(activityKey)
   ctx.body = true
 }

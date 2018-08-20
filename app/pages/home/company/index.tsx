@@ -33,6 +33,7 @@ class Company extends React.Component<any, any>{
   }, {
     title: '内容',
     dataIndex: 'content',
+    render: (text) =>  `${(text || '').slice(0,50)}...`
   }, {
     title: '时间',
     dataIndex: 'createTime',
