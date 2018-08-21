@@ -30,6 +30,12 @@ export default class Store {
     activityLoading: true
   }
 
+  @observable recruit = {
+    recruitList: [],
+    recruitModal: false,
+    recruitLoading: true
+  }
+
   /**
    * 获取新闻列表
    * @param data
@@ -277,6 +283,69 @@ export default class Store {
     if (res.statusNo) {
       message.success('删除成功！')
       await this.getActivity({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 获取招聘列表
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async getRecruit(data): Promise<void> {
+    this.recruit.recruitLoading = true
+    const res = await API.recruit.getRecruitInfo({})
+    res.data.forEach((ret, i) => { ret['key'] = i + 1 })
+    this.recruit.recruitList = res.data
+    this.recruit.recruitLoading = false
+  }
+
+  /**
+   * 添加招聘信息
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async saveRecruit(data): Promise<void> {
+    const res = await API.recruit.saveRecruitInfo(data)
+    if(res.statusNo) {
+      message.success('添加招聘信息成功！')
+      this.recruit.recruitModal = false
+      await this.getRecruit({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 发布招聘信息
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async publishRecruit(data): Promise<void> {
+    const res = await API.recruit.publishRecruit(data)
+    if(res.statusNo) {
+      message.success('发布招聘信息成功！')
+      await this.getRecruit({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 删除招聘信息
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async deleteRecruit(data): Promise<void> {
+    const res = await API.recruit.deleteRecruitInfo(data)
+    if(res.statusNo) {
+      message.success('删除招聘信息成功！')
+      await this.getRecruit({})
     } else {
       message.error(res.data)
     }

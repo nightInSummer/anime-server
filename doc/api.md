@@ -115,3 +115,29 @@
   statusNo: 1
 }
 ```
+
+### 查询招聘信息
+> /api/recruit [GET]
+
+- 入参
+
+参数|类型|样例|校验|备注
+:--|:--|:--|:--|:--
+-|-|-|-|-
+
+- 出参
+
+```js
+{
+  data: [{
+    id: 1,
+    title: ''
+    content: '',
+    createTime: '',
+    status: '' // status为1是已发布信息，0是未发布信息
+  },
+  ...
+  ],
+  statusMsg: '',
+  statusNo: 1
+}

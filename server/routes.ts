@@ -2,6 +2,7 @@ import * as NewsInfo from './controllers/News'
 import * as SowingInfo from './controllers/Sowing'
 import * as CompanyInfo from './controllers/Company'
 import * as ActivityInfo from './controllers/Activity'
+import * as RecruitInfo from './controllers/Recruit'
 
 
 interface Routers {
@@ -91,5 +92,25 @@ export const AppRoutes: Array<Routers> = [
     path: '/activityValue',
     method: 'delete',
     action: ActivityInfo.deleteActivityValue
+  },
+  {
+    path: '/recruit',
+    method: 'get',
+    action: RecruitInfo.getRecruitInfo
+  },
+  {
+    path: '/recruit',
+    method: 'post',
+    action: RecruitInfo.setRecruitInfo
+  },
+  {
+    path: '/recruit',
+    method: 'put',
+    action: RecruitInfo.publishRecruit
+  },
+  {
+    path: '/recruit',
+    method: 'delete',
+    action: RecruitInfo.deleteRecruit
   }
 ]
