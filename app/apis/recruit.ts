@@ -23,3 +23,9 @@ export async function deleteRecruitInfo(data: any) {
     .query(data)
   return res.body
 }
+
+export async function updateRecruitInfo(data: any) {
+  const res = await agent.put('/updateRecruit')
+    .send(data)
+  return res.body
+}

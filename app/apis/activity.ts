@@ -35,3 +35,27 @@ export async function deleteCompanyValue(data: any) {
     .query(data)
   return res.body
 }
+
+export async function getOldActivityKey(data: any) {
+  const res = await agent.get('/activityKeyOld')
+    .query(data)
+  return res.body
+}
+
+export async function getOldActivityValue(data: any) {
+  const res = await agent.get('/activityValueOld')
+    .query(data)
+  return res.body
+}
+
+export async function updateActivityKey(data: any) {
+  const res = await agent.put('/activityKey')
+    .send(data)
+  return res.body
+}
+
+export async function updateActivityValue(data: any) {
+  const res = await agent.put('/activityValue')
+    .send(data)
+  return res.body
+}

@@ -3,6 +3,7 @@ import { Button, Table, Popconfirm, Form, Modal, Input } from 'antd'
 import moment from 'moment'
 import {inject, observer} from "mobx-react"
 import Editor from '../component/editor'
+import * as API from '../../../apis'
 import './news.scss'
 
 const FormItem = Form.Item
@@ -24,6 +25,7 @@ const formItemLayout = {
   saveNews: res.store.saveNews,
   publishNews: res.store.publishNews,
   deleteNews: res.store.deleteNews,
+  updateNews: res.store.updateNews
 })) @observer
 class News extends React.Component<any, any> {
   private columns = [{
@@ -48,6 +50,7 @@ class News extends React.Component<any, any> {
         return (
           <span>
             <span>已发布</span>
+            <a href='javascript:;' onClick={this.changeContent.bind(this, record.id)}>&nbsp;&nbsp;&nbsp;&nbsp;编辑</a>
             <Popconfirm title="确认删除?" onConfirm={ this.deleteNews.bind(this, text) } okText="是" cancelText="否">
               <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
             </Popconfirm>
@@ -57,6 +60,7 @@ class News extends React.Component<any, any> {
         return (
           <span>
             <a href='javascript:;' onClick={ this.publishNews.bind(this, text) }>发布</a>
+             <a href='javascript:;' onClick={this.changeContent.bind(this, record.id)}>&nbsp;&nbsp;&nbsp;&nbsp;编辑</a>
             <Popconfirm title="确认删除?" onConfirm={ this.deleteNews.bind(this, text) } okText="是" cancelText="否">
              <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
             </Popconfirm>
@@ -78,6 +82,8 @@ class News extends React.Component<any, any> {
   }
 
   public showModal () {
+    this.clearData()
+    this.props.news.type = 'save'
     this.props.news.newsModal = true
   }
 
@@ -95,10 +101,40 @@ class News extends React.Component<any, any> {
 
   public submitData() {
     const result = this.props.form.getFieldsValue()
+    const { type } = this.props.news
+    if(type === 'save') {
+      this.props.saveNews({
+        title: result.title,
+        content: result.newsContent
+      })
+    } else if(type === 'edit') {
+      this.props.updateNews({
+        id:  this.props.news.id,
+        title: result.title,
+        content: result.newsContent
+      })
+    }
+  }
 
-    this.props.saveNews({
-      title: result.title,
-      content: result.newsContent
+  public async changeContent(id) {
+    await this.getOldContent(id)
+    this.props.news.type = 'edit'
+    this.props.news.id = id
+    this.props.news.newsModal = true
+  }
+
+  public async getOldContent(id) {
+    const res = await API.news.getNewsInfo({ id })
+    this.props.form.setFieldsValue({
+      title: res.data[0].title,
+      newsContent: res.data[0].content
+    })
+  }
+
+  public clearData() {
+    this.props.form.setFieldsValue({
+      title: '',
+      newsContent: ''
     })
   }
 
@@ -139,7 +175,7 @@ class News extends React.Component<any, any> {
               {getFieldDecorator('newsContent', {
                 initialValue: ''
               })(
-                <Editor />
+                <Editor visible={newsModal} />
               )}
             </FormItem>
           </Form>

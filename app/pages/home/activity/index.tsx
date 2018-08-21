@@ -3,6 +3,7 @@ import { Button, Table, Popconfirm, Form, Modal, Input, Select } from 'antd'
 import moment from 'moment'
 import Editor from '../component/editor'
 import {inject, observer} from "mobx-react"
+import * as API from "../../../apis"
 
 const FormItem = Form.Item
 const Option = Select.Option
@@ -18,6 +19,17 @@ const formItemLayout = {
   }
 }
 
+const formItemLayoutKey = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 6 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 15 },
+  }
+}
+
 @inject((res: any) => ({
   activity: res.store.activity,
   getActivity: res.store.getActivity,
@@ -26,6 +38,8 @@ const formItemLayout = {
   saveActivityValue: res.store.saveActivityValue,
   deleteActivityKey: res.store.deleteActivityKey,
   deleteActivityValue: res.store.deleteActivityValue,
+  updateActivityKey: res.store.updateActivityKey,
+  updateActivityValue: res.store.updateActivityValue
 })) @observer
 class Company extends React.Component<any, any>{
   private columns = [{
@@ -44,6 +58,7 @@ class Company extends React.Component<any, any>{
     render: (text, record) => {
       return (
         <span>
+          <a href='javascript:;' onClick={this.changeContentKey.bind(this, record.id)}>&nbsp;&nbsp;&nbsp;&nbsp;编辑</a>
           <Popconfirm title="确认删除?" onConfirm={ this.deleteActivityKey.bind(this, text) } okText="是" cancelText="否">
            <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
           </Popconfirm>
@@ -58,8 +73,9 @@ class Company extends React.Component<any, any>{
       { title: '标题', dataIndex: 'title', key: 'title' },
       { title: '内容', dataIndex: 'content', key: 'content', render: (text) =>  `${(text || '').slice(0,50)}...` },
       { title: '时间', dataIndex: 'createTime', key: 'createTime', render: (text) => moment(text).format('YYYY-MM-DD HH:mm:ss') },
-      { title: '操作', dataIndex: 'id', key: 'id', render: (text) =>  (
+      { title: '操作', dataIndex: 'id', key: 'id', render: (text, other) =>  (
         <span>
+           <a href='javascript:;' onClick={this.changeContentValue.bind(this, other.id)}>&nbsp;&nbsp;&nbsp;&nbsp;编辑</a>
           <Popconfirm title="确认删除?" onConfirm={ this.deleteActivityValue.bind(this, text) } okText="是" cancelText="否">
            <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
           </Popconfirm>
@@ -86,6 +102,8 @@ class Company extends React.Component<any, any>{
   }
 
   public showModal (type) {
+    this.clearData()
+    this.props.activity.type = 'save'
     this.props.activity[type] = true
   }
 
@@ -101,19 +119,74 @@ class Company extends React.Component<any, any>{
     this.props.activity[type] = false
   }
 
-  public submitData(type) {
+  public submitData(postType) {
     const result = this.props.form.getFieldsValue()
-    if(type === 'activityKey') {
-      this.props.saveActivityKey({
-        title: result.activityKeyTitle
-      })
-    } else {
-      this.props.saveActivityValue({
-        id: result.activityKeyId,
-        title: result.activityValueTitle,
-        content: result.activityValueContent
-      })
+    const { type } = this.props.activity
+    if(type === 'save') {
+      if (postType === 'activityKey') {
+        this.props.saveActivityKey({
+          title: result.activityKeyTitle
+        })
+      } else {
+        this.props.saveActivityValue({
+          id: result.activityKeyId,
+          title: result.activityValueTitle,
+          content: result.activityValueContent
+        })
+      }
+    } else if(type === 'edit') {
+      if (postType === 'activityKey') {
+        this.props.updateActivityKey({
+          id: this.props.activity.id,
+          title: result.activityKeyTitle
+        })
+      } else {
+        this.props.updateActivityValue({
+          id: this.props.activity.id,
+          title: result.activityValueTitle,
+          content: result.activityValueContent
+        })
+      }
     }
+  }
+
+  public async changeContentKey(id) {
+    await this.getOldContentKey(id)
+    this.props.activity.type = 'edit'
+    this.props.activity.id = id
+    this.props.activity.activityKeyModal = true
+  }
+
+  public async getOldContentKey(id) {
+    const res = await API.activity.getOldActivityKey({ id })
+    this.props.form.setFieldsValue({
+      activityKeyTitle: res.data[0].title
+    })
+  }
+
+  public async changeContentValue(id) {
+    await this.getOldContentValue(id)
+    this.props.activity.type = 'edit'
+    this.props.activity.id = id
+    this.props.activity.activityValueModal = true
+  }
+
+  public async getOldContentValue(id) {
+    const res = await API.activity.getOldActivityValue({ id })
+    console.log(222, res.data[0].content)
+    this.props.form.setFieldsValue({
+      activityValueTitle: res.data[0].title,
+      activityValueContent: res.data[0].content
+    })
+  }
+
+  public clearData() {
+    this.props.form.setFieldsValue({
+      activityKeyTitle: '',
+      activityKeyId: '',
+      activityValueTitle: '',
+      activityValueContent: ''
+    })
   }
 
   public createActivityKey() {
@@ -122,13 +195,13 @@ class Company extends React.Component<any, any>{
   }
 
   render() {
-    const { activityList, activityKeyModal, activityValueModal } = this.props.activity
+    const { activityList, activityKeyModal, activityValueModal, type } = this.props.activity
     const { getFieldDecorator } = this.props.form
     return (
       <div id="main">
-        <Button type="primary" onClick={ this.showModal.bind(this, 'activityKeyModal') }>添加一级标题</Button>
+        <Button style={{ marginBottom: 24 }} type="primary" onClick={ this.showModal.bind(this, 'activityKeyModal') }>添加一级标题</Button>
         <Button type="primary" style={{ marginLeft: 15 }} onClick={ this.showModal.bind(this, 'activityValueModal') }>添加活动</Button>
-        <div style={{ marginTop: 24 }}>
+        <div>
           <Table
             columns={this.columns as any}
             dataSource={activityList}
@@ -146,7 +219,7 @@ class Company extends React.Component<any, any>{
         >
           <Form>
             <FormItem
-              {...formItemLayout}
+              {...formItemLayoutKey}
               label="一级活动标题"
             >
               {getFieldDecorator('activityKeyTitle', {
@@ -167,20 +240,22 @@ class Company extends React.Component<any, any>{
           okText="确定"
         >
           <Form>
-            <FormItem
-              {...formItemLayout}
-              label="所属一级分类"
-            >
-              {getFieldDecorator('activityKeyId', { initialValue: '' })(
-                <Select
-                  style={{ width: 200 }}
-                  showSearch
-                  optionFilterProp='children'
-                >
-                  { this.createActivityKey() }
-                </Select>
-              )}
-            </FormItem>
+            { type === 'save' ?
+              <FormItem
+                {...formItemLayout}
+                label="所属一级分类"
+              >
+                {getFieldDecorator('activityKeyId', { initialValue: '' })(
+                  <Select
+                    style={{ width: 200 }}
+                    showSearch
+                    optionFilterProp='children'
+                  >
+                    { this.createActivityKey() }
+                  </Select>
+                )}
+              </FormItem> : ''
+            }
             <FormItem
               {...formItemLayout}
               label="活动标题"
@@ -198,7 +273,7 @@ class Company extends React.Component<any, any>{
               {getFieldDecorator('activityValueContent', {
                 initialValue: ''
               })(
-                <Editor />
+                <Editor visible={activityValueModal} />
               )}
             </FormItem>
           </Form>

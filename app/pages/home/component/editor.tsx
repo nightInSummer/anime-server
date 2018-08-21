@@ -9,7 +9,6 @@ export default class Editor extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      htmlContent: "",
       responseList: []
     }
     this.receiveHtml = this.receiveHtml.bind(this);
@@ -20,11 +19,27 @@ export default class Editor extends React.Component<any, any> {
   }
 
   receiveHtml(content) {
-    console.log("recieved HTML content", content);
     this.setState({responseList:[]});
     this.props.onChange(content)
   }
-  componentDidMount() {}
+  componentDidMount() {
+    this.setState({
+      htmlContent: this.props.value
+    })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.visible && !this.props.visible) {
+      this.setState({
+        htmlContent: nextProps.value
+      })
+    }
+    if(!nextProps.visible && this.props.visible) {
+      this.setState({
+        htmlContent: ''
+      })
+    }
+  }
 
   onChange(info) {
     // console.log("onChange:", info);
@@ -111,6 +126,7 @@ export default class Editor extends React.Component<any, any> {
       beforeUpload: this.beforeUpload,
       showUploadList: true
     }
+
     return (
       <LzEditor
         active={true}

@@ -34,6 +34,11 @@ export const AppRoutes: Array<Routers> = [
     action: NewsInfo.deleteNews
   },
   {
+    path: '/updateNews',
+    method: 'put',
+    action: NewsInfo.updateNewsInfo
+  },
+  {
     path: '/sowing',
     method: 'get',
     action: SowingInfo.getSowingInfo
@@ -64,6 +69,11 @@ export const AppRoutes: Array<Routers> = [
     action: CompanyInfo.deleteCompany
   },
   {
+    path: '/company',
+    method: 'put',
+    action: CompanyInfo.updateCompanyInfo
+  },
+  {
     path: '/activity',
     method: 'get',
     action: ActivityInfo.getActivity
@@ -74,14 +84,34 @@ export const AppRoutes: Array<Routers> = [
     action: ActivityInfo.getActivityKey
   },
   {
+    path: '/activityKeyOld',
+    method: 'get',
+    action: ActivityInfo.getOldActivityKey
+  },
+  {
     path: '/activityKey',
     method: 'post',
     action: ActivityInfo.setActivityKey
   },
   {
+    path: '/activityKey',
+    method: 'put',
+    action: ActivityInfo.updateOldActivityKey
+  },
+  {
+    path: '/activityValueOld',
+    method: 'get',
+    action: ActivityInfo.getOldActivityValue
+  },
+  {
     path: '/activityValue',
     method: 'post',
     action: ActivityInfo.setActivityValue
+  },
+  {
+    path: '/activityValue',
+    method: 'put',
+    action: ActivityInfo.updateOldActivityValue
   },
   {
     path: '/activityKey',
@@ -112,5 +142,10 @@ export const AppRoutes: Array<Routers> = [
     path: '/recruit',
     method: 'delete',
     action: RecruitInfo.deleteRecruit
+  },
+  {
+    path: '/updateRecruit',
+    method: 'put',
+    action: RecruitInfo.updateRecruitInfo
   }
 ]

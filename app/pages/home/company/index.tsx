@@ -3,6 +3,7 @@ import { Button, Table, Popconfirm, Form, Modal, Input } from 'antd'
 import moment from 'moment'
 import Editor from '../component/editor'
 import {inject, observer} from "mobx-react"
+import * as API from "../../../apis"
 
 const FormItem = Form.Item
 
@@ -21,7 +22,8 @@ const formItemLayout = {
   company: res.store.company,
   getCompany: res.store.getCompany,
   saveCompany: res.store.saveCompany,
-  deleteCompany: res.store.deleteCompany
+  deleteCompany: res.store.deleteCompany,
+  updateCompany: res.store.updateCompany
 })) @observer
 class Company extends React.Component<any, any>{
   private columns = [{
@@ -41,9 +43,10 @@ class Company extends React.Component<any, any>{
   }, {
     title: '操作',
     dataIndex: 'id',
-    render: (text) => {
+    render: (text, record) => {
       return (
         <span>
+          <a href='javascript:;' onClick={this.changeContent.bind(this, record.id)}>&nbsp;&nbsp;&nbsp;&nbsp;编辑</a>
           <Popconfirm title="确认删除?" onConfirm={ this.deleteNews.bind(this, text) } okText="是" cancelText="否">
            <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
           </Popconfirm>
@@ -60,6 +63,8 @@ class Company extends React.Component<any, any>{
   }
 
   public showModal () {
+    this.clearData()
+    this.props.company.type = 'save'
     this.props.company.companyModal = true
   }
 
@@ -73,10 +78,41 @@ class Company extends React.Component<any, any>{
 
   public submitData() {
     const result = this.props.form.getFieldsValue()
+    const { type } = this.props.company
+    if(type === 'save') {
+      this.props.saveCompany({
+        title: result.title,
+        content: result.companyContent
+      })
+    } else if(type === 'edit') {
+      this.props.updateCompany({
+        id:  this.props.company.id,
+        title: result.title,
+        content: result.companyContent
+      })
+    }
+  }
 
-    this.props.saveCompany({
-      title: result.title,
-      content: result.newsContent
+  public async changeContent(id) {
+    await this.getOldContent(id)
+    this.props.company.type = 'edit'
+    this.props.company.id = id
+    this.props.company.companyModal = true
+  }
+
+  public async getOldContent(id) {
+    const res = await API.company.getCompanyInfo({ id })
+    console.log(res)
+    this.props.form.setFieldsValue({
+      title: res.data[0].title,
+      companyContent: res.data[0].content
+    })
+  }
+
+  public clearData() {
+    this.props.form.setFieldsValue({
+      title: '',
+      companyContent: ''
     })
   }
 
@@ -85,8 +121,8 @@ class Company extends React.Component<any, any>{
     const { getFieldDecorator } = this.props.form
     return (
       <div id="main">
-        <Button type="primary" onClick={ this.showModal.bind(this) }>添加公司文章</Button>
-        <div style={{ marginTop: 24 }}>
+        <Button style={{ marginBottom: 24 }} type="primary" onClick={ this.showModal.bind(this) }>添加公司文章</Button>
+        <div>
           <Table columns={this.columns as any} dataSource={companyList} />
         </div>
         <Modal
@@ -113,10 +149,10 @@ class Company extends React.Component<any, any>{
               {...formItemLayout}
               label="文章内容"
             >
-              {getFieldDecorator('newsContent', {
+              {getFieldDecorator('companyContent', {
                 initialValue: ''
               })(
-                <Editor />
+                <Editor visible={companyModal} />
               )}
             </FormItem>
           </Form>

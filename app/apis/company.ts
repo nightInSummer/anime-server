@@ -17,3 +17,9 @@ export async function deleteCompanyInfo(data: any) {
     .query(data)
   return res.body
 }
+
+export async function updateCompanyInfo(data: any) {
+  const res = await agent.put('/company')
+    .send(data)
+  return res.body
+}

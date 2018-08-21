@@ -4,8 +4,8 @@ import { NewsInfo } from "../models/NewsInfo"
 
 export async function getNewsInfo(ctx: Context): Promise<void> {
   const newsRepository = getManager().getRepository(NewsInfo)
-
-  ctx.body = await newsRepository.find()
+  const filter = ctx.query.id ? { id: ctx.query.id } : {}
+  ctx.body = await newsRepository.find(filter)
 }
 
 export async function setNewsInfo(ctx: Context): Promise<void> {
@@ -32,4 +32,10 @@ export async function deleteNews(ctx: Context): Promise<void> {
 
   await newsRepository.delete(ctx.query.id)
   ctx.body = true
+}
+
+export async function updateNewsInfo(ctx: Context): Promise<void> {
+  const newsRepository = getManager().getRepository(NewsInfo)
+  const newData = newsRepository.create(ctx.request.body)
+  await newsRepository.save(newData)
 }

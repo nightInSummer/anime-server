@@ -5,35 +5,46 @@ import * as _ from '../../../common/utils'
 
 export default class Store {
   @observable news = {
+    id: 0,
     newsList: [],
     newsModal: false,
-    newsLoading: true
+    newsLoading: true,
+    type: 'save'
   }
 
   @observable sowing = {
+    id: 0,
     sowingList: [],
     sowingModal: false,
-    sowingLoading: true
+    sowingLoading: true,
+    type: 'save'
   }
 
   @observable company = {
+    id: 0,
     companyList: [],
     companyModal: false,
-    companyLoading: true
+    companyLoading: true,
+    type: 'save'
+
   }
 
   @observable activity = {
+    id: 0,
     activityList: [],
     activityKeyList: [],
     activityKeyModal: false,
     activityValueModal: false,
-    activityLoading: true
+    activityLoading: true,
+    type: 'save'
   }
 
   @observable recruit = {
+    id: 0,
     recruitList: [],
     recruitModal: false,
-    recruitLoading: true
+    recruitLoading: true,
+    type: 'save'
   }
 
   /**
@@ -93,6 +104,18 @@ export default class Store {
     const res = await API.news.deleteNewsInfo(data)
     if(res.statusNo) {
       message.success('删除新闻成功！')
+      await this.getNews({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  @action.bound
+  async updateNews(data): Promise<void> {
+    const res = await API.news.updateNewsInfo(data)
+    if(res.statusNo) {
+      message.success('修改新闻成功！')
+      this.news.newsModal = false
       await this.getNews({})
     } else {
       message.error(res.data)
@@ -194,6 +217,18 @@ export default class Store {
     }
   }
 
+  @action.bound
+  async updateCompany(data): Promise<void> {
+    const res = await API.company.updateCompanyInfo(data)
+    if(res.statusNo) {
+      message.success('修改招聘信息成功！')
+      this.company.companyModal = false
+      await this.getCompany({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
   /**
    * 获取活动列表
    * @param data
@@ -288,6 +323,30 @@ export default class Store {
     }
   }
 
+  @action.bound
+  async updateActivityKey(data): Promise<void> {
+    const res = await API.activity.updateActivityKey(data)
+    if(res.statusNo) {
+      message.success('修改成功！')
+      this.activity.activityKeyModal = false
+      await this.getActivity({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  @action.bound
+  async updateActivityValue(data): Promise<void> {
+    const res = await API.activity.updateActivityValue(data)
+    if(res.statusNo) {
+      message.success('修改成功！')
+      this.activity.activityValueModal = false
+      await this.getActivity({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
   /**
    * 获取招聘列表
    * @param data
@@ -345,6 +404,18 @@ export default class Store {
     const res = await API.recruit.deleteRecruitInfo(data)
     if(res.statusNo) {
       message.success('删除招聘信息成功！')
+      await this.getRecruit({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  @action.bound
+  async updateRecruit(data): Promise<void> {
+    const res = await API.recruit.updateRecruitInfo(data)
+    if(res.statusNo) {
+      message.success('修改招聘信息成功！')
+      this.recruit.recruitModal = false
       await this.getRecruit({})
     } else {
       message.error(res.data)

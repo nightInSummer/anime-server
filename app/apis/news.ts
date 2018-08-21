@@ -23,3 +23,9 @@ export async function deleteNewsInfo(data: any) {
     .query(data)
   return res.body
 }
+
+export async function updateNewsInfo(data: any) {
+  const res = await agent.put('/updateNews')
+    .send(data)
+  return res.body
+}
