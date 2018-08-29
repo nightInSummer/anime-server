@@ -8,6 +8,7 @@ import HomePage from './homepage'
 import Company from './company'
 import Activity from './activity'
 import Recruit from './recruit'
+import Production from './production'
 import Header from '../../layouts/header'
 
 
@@ -22,6 +23,7 @@ export default function Routers () {
         <Route exact path='/company' component={ Company } />
         <Route exact path='/activity' component={ Activity } />
         <Route exact path='/recruit' component={ Recruit } />
+        <Route exact path='/production' component={ Production } />
       </Switch>
     </React.Fragment>
   )

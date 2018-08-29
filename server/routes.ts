@@ -3,6 +3,7 @@ import * as SowingInfo from './controllers/Sowing'
 import * as CompanyInfo from './controllers/Company'
 import * as ActivityInfo from './controllers/Activity'
 import * as RecruitInfo from './controllers/Recruit'
+import * as ProductionInfo from "./controllers/Production"
 
 
 interface Routers {
@@ -147,5 +148,25 @@ export const AppRoutes: Array<Routers> = [
     path: '/updateRecruit',
     method: 'put',
     action: RecruitInfo.updateRecruitInfo
-  }
+  },
+  {
+    path: '/production',
+    method: 'get',
+    action: ProductionInfo.getProductionInfo
+  },
+  {
+    path: '/production',
+    method: 'post',
+    action: ProductionInfo.setProductionInfo
+  },
+  {
+    path: '/production',
+    method: 'delete',
+    action: ProductionInfo.deleteProduction
+  },
+  {
+    path: '/production',
+    method: 'put',
+    action: ProductionInfo.updateProductionInfo
+  },
 ]

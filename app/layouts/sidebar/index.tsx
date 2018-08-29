@@ -28,6 +28,10 @@ export default class Sidebar extends React.Component<{}, { pathname: String, sid
         href: 'company',
         text: '公司介绍'
       }, {
+        icon: 'camera',
+        href: 'production',
+        text: '作品'
+      }, {
         icon: 'bars',
         href: 'activity',
         text: '活动'

@@ -47,6 +47,14 @@ export default class Store {
     type: 'save'
   }
 
+  @observable production = {
+    id: 0,
+    productionList: [],
+    productionModal: false,
+    productionLoading: true,
+    type: 'save'
+  }
+
   /**
    * 获取新闻列表
    * @param data
@@ -221,7 +229,7 @@ export default class Store {
   async updateCompany(data): Promise<void> {
     const res = await API.company.updateCompanyInfo(data)
     if(res.statusNo) {
-      message.success('修改招聘信息成功！')
+      message.success('修改成功！')
       this.company.companyModal = false
       await this.getCompany({})
     } else {
@@ -417,6 +425,65 @@ export default class Store {
       message.success('修改招聘信息成功！')
       this.recruit.recruitModal = false
       await this.getRecruit({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 获取作品文章
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async getProduction(data): Promise<void> {
+    this.production.productionLoading = true
+    const res = await API.production.getProductionInfo({})
+    res.data.forEach((ret, i) => { ret['key'] = i + 1 })
+    this.production.productionList = res.data
+    this.production.productionLoading = false
+  }
+
+  /**
+   * 添加作品文章
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async saveProduction(data): Promise<void> {
+    const res = await API.production.saveProductionInfo(data)
+    if(res.statusNo) {
+      message.success('添加公司文章成功！')
+      this.production.productionModal = false
+      await this.getProduction({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 删除作品文章
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async deleteProduction(data): Promise<void> {
+    const res = await API.production.deleteProductionInfo(data)
+    if(res.statusNo) {
+      message.success('删除公司文章成功！')
+      await this.getProduction({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  @action.bound
+  async updateProduction(data): Promise<void> {
+    const res = await API.production.updateProductionInfo(data)
+    if(res.statusNo) {
+      message.success('修改成功！')
+      this.production.productionModal = false
+      await this.getProduction({})
     } else {
       message.error(res.data)
     }
