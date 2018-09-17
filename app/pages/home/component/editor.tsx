@@ -48,7 +48,7 @@ export default class Editor extends React.Component<any, any> {
 
     currFileList = currFileList.filter((f) => (!f.length));
     //读取远程路径并显示链接
-    const url = 'http://localhost:3000'
+    const url = 'http://39.106.187.16:8000'
     currFileList = currFileList.map((file) => {
       if (file.response) {
         // 组件会将 file.url 作为链接进行展示
