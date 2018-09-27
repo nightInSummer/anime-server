@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { Button, Table, Popconfirm, Form, Modal, Input } from 'antd'
 import moment from 'moment'
-import Editor from '../component/editor'
+
 import {inject, observer} from "mobx-react"
-import * as API from "../../../apis"
+import * as API from "../../../../../apis"
 
 const FormItem = Form.Item
+const TextArea = Input.TextArea
 
 const formItemLayout = {
   labelCol: {
@@ -19,13 +20,13 @@ const formItemLayout = {
 }
 
 @inject((res: any) => ({
-  production: res.store.production,
-  getProduction: res.store.getProduction,
-  saveProduction: res.store.saveProduction,
-  deleteProduction: res.store.deleteProduction,
-  updateProduction: res.store.updateProduction
+  video: res.store.video,
+  getVideo: res.store.getVideo,
+  saveVideo: res.store.saveVideo,
+  deleteVideo: res.store.deleteVideo,
+  updateVideo: res.store.updateVideo
 })) @observer
-class Production extends React.Component<any, any>{
+class Video extends React.Component<any, any>{
   private columns = [{
     title: '序号',
     dataIndex: 'key',
@@ -34,7 +35,7 @@ class Production extends React.Component<any, any>{
     dataIndex: 'title',
   }, {
     title: '内容',
-    dataIndex: 'content',
+    dataIndex: 'code',
     render: (text) =>  `${(text || '').slice(0,50)}...`
   }, {
     title: '时间',
@@ -42,6 +43,7 @@ class Production extends React.Component<any, any>{
     render: (text) => moment(text).format('YYYY-MM-DD HH:mm:ss')
   }, {
     title: '操作',
+    align: 'right',
     dataIndex: 'id',
     render: (text, record) => {
       return (
@@ -59,85 +61,85 @@ class Production extends React.Component<any, any>{
   }
 
   public componentDidMount() {
-    this.props.getProduction()
+    this.props.getVideo()
   }
 
   public showModal () {
     this.clearData()
-    this.props.production.type = 'save'
-    this.props.production.productionModal = true
+    this.props.video.type = 'save'
+    this.props.video.videoModal = true
   }
 
   public deleteNews(id) {
-    this.props.deleteProduction({ id })
+    this.props.deleteVideo({ id })
   }
 
   public handleCancel() {
-    this.props.production.productionModal = false
+    this.props.video.videoModal = false
   }
 
   public submitData() {
     const result = this.props.form.getFieldsValue()
-    const { type } = this.props.production
+    const { type } = this.props.video
     if(type === 'save') {
-      this.props.saveProduction({
+      this.props.saveVideo({
         title: result.title,
-        content: result.productionContent
+        code: result.videoContent
       })
     } else if(type === 'edit') {
-      this.props.updateProduction({
-        id:  this.props.production.id,
+      this.props.updateVideo({
+        id:  this.props.video.id,
         title: result.title,
-        content: result.productionContent
+        code: result.videoContent
       })
     }
   }
 
   public async changeContent(id) {
     await this.getOldContent(id)
-    this.props.production.type = 'edit'
-    this.props.production.id = id
-    this.props.production.productionModal = true
+    this.props.video.type = 'edit'
+    this.props.video.id = id
+    this.props.video.videoModal = true
   }
 
   public async getOldContent(id) {
-    const res = await API.production.getProductionInfo({ id })
+    const res = await API.video.getVideoInfo({ id })
     console.log(res)
     this.props.form.setFieldsValue({
       title: res.data[0].title,
-      productionContent: res.data[0].content
+      videoContent: res.data[0].code
     })
   }
 
   public clearData() {
     this.props.form.setFieldsValue({
       title: '',
-      productionContent: ''
+      videoContent: ''
     })
   }
 
   render() {
-    const { productionList, productionModal } = this.props.production
+    const { videoList, videoModal } = this.props.video
     const { getFieldDecorator } = this.props.form
     return (
       <div id="main">
-        <Button style={{ marginBottom: 24 }} type="primary" onClick={ this.showModal.bind(this) }>添加作品文章</Button>
+        <Button style={{ marginBottom: 24 }} type="primary" onClick={ this.showModal.bind(this) }>添加视频类动画作品</Button>
         <div>
-          <Table columns={this.columns as any} dataSource={productionList} />
+          <Table columns={this.columns as any} dataSource={videoList} />
         </div>
         <Modal
-          title="新建作品文章"
-          visible={ productionModal }
+          title="新建视频类动画作品"
+          visible={ videoModal }
           onCancel={ this.handleCancel.bind(this) }
           onOk={ this.submitData.bind(this) }
-          width={'1100px'}
+          width={'560px'}
           cancelText="取消"
           okText="确定"
         >
           <Form>
             <FormItem
               {...formItemLayout}
-              label="文章标题"
+              label="视频标题"
             >
               {getFieldDecorator('title', {
                 initialValue: ''
@@ -147,12 +149,12 @@ class Production extends React.Component<any, any>{
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="文章内容"
+              label="视频代码"
             >
-              {getFieldDecorator('productionContent', {
+              {getFieldDecorator('videoContent', {
                 initialValue: ''
               })(
-                <Editor visible={productionModal} />
+                <TextArea rows={4} />
               )}
             </FormItem>
           </Form>
@@ -162,4 +164,4 @@ class Production extends React.Component<any, any>{
   }
 }
 
-export default Form.create()(Production)
+export default Form.create()(Video)

@@ -17,12 +17,12 @@ const formItemLayout = {
 }
 
 @inject((res: any) => ({
-  sowing: res.store.sowing,
-  getSowing: res.store.getSowing,
-  saveSowing: res.store.saveSowing,
-  deleteSowing: res.store.deleteSowing,
+  inset: res.store.inset,
+  getInset: res.store.getInset,
+  saveInset: res.store.saveInset,
+  deleteInset: res.store.deleteInset,
 })) @observer
-class Sowing extends React.Component<any, any> {
+class Inset extends React.Component<any, any> {
   private columns = [{
     title: '序号',
     dataIndex: 'key',
@@ -30,14 +30,11 @@ class Sowing extends React.Component<any, any> {
     title: '标题',
     dataIndex: 'title',
   }, {
-    title: '轮播图',
+    title: '图片',
     dataIndex: 'image',
     render: (text) => {
       return <a href='javascript:;' onClick={ this.showPhoto.bind(this, text) }>查看</a>
     }
-  }, {
-    title: '跳转地址',
-    dataIndex: 'url',
   }, {
     title: '时间',
     dataIndex: 'createTime',
@@ -46,24 +43,14 @@ class Sowing extends React.Component<any, any> {
     title: '操作',
     align: 'right',
     dataIndex: 'id',
-    render: (text, record) => {
-      if(record.status) {
-        return (
-          <span>
-            <Popconfirm title="确认删除?" onConfirm={ this.deleteSowing.bind(this, text) } okText="是" cancelText="否">
-              <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
-            </Popconfirm>
-          </span>
-        )
-      } else {
-        return (
-          <span>
-            <Popconfirm title="确认删除?" onConfirm={ this.deleteSowing.bind(this, text) } okText="是" cancelText="否">
-             <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
-            </Popconfirm>
-          </span>
-        )
-      }
+    render: (text) => {
+      return (
+        <span>
+          <Popconfirm title="确认删除?" onConfirm={ this.deleteInset.bind(this, text) } okText="是" cancelText="否">
+            <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
+          </Popconfirm>
+        </span>
+      )
     }
   }]
   constructor(props) {
@@ -76,26 +63,26 @@ class Sowing extends React.Component<any, any> {
   }
 
   public componentDidMount() {
-    this.props.getSowing()
+    this.props.getInset()
   }
 
   public showModal () {
-    this.props.sowing.sowingModal = true
+    this.props.inset.insetModal = true
   }
 
-  public deleteSowing(id) {
-    this.props.deleteSowing({ id })
+  public deleteInset(id) {
+    this.props.deleteInset({ id })
   }
 
   public handleCancel() {
-    this.props.sowing.sowingModal = false
+    this.props.inset.insetModal = false
   }
 
   public submitData() {
     const result = this.props.form.getFieldsValue()
     const { fileList } = this.state
 
-    this.props.saveSowing({
+    this.props.saveInset({
       title: result.title,
       url: result.url,
       image: fileList[0].response[fileList[0].name]
@@ -118,7 +105,7 @@ class Sowing extends React.Component<any, any> {
   }
 
   render() {
-    const { sowingList, sowingModal } = this.props.sowing
+    const { insetList, insetModal } = this.props.inset
     const { getFieldDecorator } = this.props.form
 
     const { previewVisible, previewImage, fileList } = this.state
@@ -131,14 +118,14 @@ class Sowing extends React.Component<any, any> {
     )
 
     return (
-      <div>
-        <Button type="primary" onClick={ this.showModal.bind(this) }>添加轮播图</Button>
-        <div style={{ marginTop: 24 }}>
-          <Table columns={this.columns as any} dataSource={sowingList} />
+      <div id="main">
+        <Button style={{ marginBottom: 24 }} type="primary" onClick={ this.showModal.bind(this) }>添加插画类作品</Button>
+        <div>
+          <Table columns={this.columns as any} dataSource={insetList} />
         </div>
         <Modal
-          title="新轮播图"
-          visible={ sowingModal }
+          title="新增插画类作品"
+          visible={ insetModal }
           onCancel={ this.handleCancel.bind(this) }
           onOk={ this.submitData.bind(this) }
           width={'560px'}
@@ -148,17 +135,17 @@ class Sowing extends React.Component<any, any> {
           <Form>
             <FormItem
               {...formItemLayout}
-              label="轮播图标题"
+              label="作品标题"
             >
               {getFieldDecorator('title', {
                 initialValue: ''
               })(
-                <Input placeholder="请输入新闻标题" />
+                <Input placeholder="请输入作品标题" />
               )}
             </FormItem>
             <FormItem
               {...formItemLayout}
-              label="轮播图"
+              label="图片"
             >
               <Upload
                 action="/api/uploadImage"
@@ -171,16 +158,6 @@ class Sowing extends React.Component<any, any> {
               </Upload>
 
             </FormItem>
-            <FormItem
-              {...formItemLayout}
-              label="跳转地址"
-            >
-              {getFieldDecorator('url', {
-                initialValue: ''
-              })(
-                <Input placeholder="请输入跳转地址" />
-              )}
-            </FormItem>
           </Form>
         </Modal>
         <Modal visible={previewVisible} footer={null} onCancel={this.handleCancelUpload}>
@@ -191,4 +168,4 @@ class Sowing extends React.Component<any, any> {
   }
 }
 
-export default Form.create()(Sowing)
+export default Form.create()(Inset)

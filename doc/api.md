@@ -141,3 +141,82 @@
   statusMsg: '',
   statusNo: 1
 }
+```
+
+### 查询插画类作品信息
+> /api/inset [GET]
+
+- 入参
+
+参数|类型|样例|校验|备注
+:--|:--|:--|:--|:--
+-|-|-|-|-
+
+- 出参
+
+```js
+{
+  data: [{
+    id: 1,
+    title: ''
+    image: '',
+    createTime: ''
+  },
+  ...
+  ],
+  statusMsg: '',
+  statusNo: 1
+}
+```
+
+### 查询图片类动画作品信息
+> /api/photo [GET]
+
+- 入参
+
+参数|类型|样例|校验|备注
+:--|:--|:--|:--|:--
+-|-|-|-|-
+
+- 出参
+
+```js
+{
+  data: [{
+    id: 1,
+    title: ''
+    image: '',
+    createTime: ''
+  },
+  ...
+  ],
+  statusMsg: '',
+  statusNo: 1
+}
+```
+
+### 查询视频类动画作品信息
+> /api/video [GET]
+
+- 入参
+
+参数|类型|样例|校验|备注
+:--|:--|:--|:--|:--
+-|-|-|-|-
+
+- 出参
+
+```js
+{
+  data: [{
+    id: 1,
+    title: ''
+    code: '',
+    createTime: ''
+  },
+  ...
+  ],
+  statusMsg: '',
+  statusNo: 1
+}
+```

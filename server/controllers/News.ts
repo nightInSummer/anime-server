@@ -38,4 +38,5 @@ export async function updateNewsInfo(ctx: Context): Promise<void> {
   const newsRepository = getManager().getRepository(NewsInfo)
   const newData = newsRepository.create(ctx.request.body)
   await newsRepository.save(newData)
+  ctx.body = true
 }

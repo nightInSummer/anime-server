@@ -44,6 +44,7 @@ class News extends React.Component<any, any> {
     render: (text) => moment(text).format('YYYY-MM-DD HH:mm:ss')
   }, {
     title: '操作',
+    align: 'right',
     dataIndex: 'id',
     render: (text, record) => {
       if(record.status) {

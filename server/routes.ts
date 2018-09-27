@@ -3,7 +3,10 @@ import * as SowingInfo from './controllers/Sowing'
 import * as CompanyInfo from './controllers/Company'
 import * as ActivityInfo from './controllers/Activity'
 import * as RecruitInfo from './controllers/Recruit'
-import * as ProductionInfo from "./controllers/Production"
+import * as InsetInfo from './controllers/Inset'
+import * as PhotoInfo from './controllers/Photo'
+import * as VideoInfo from './controllers/Video'
+
 
 
 interface Routers {
@@ -150,23 +153,53 @@ export const AppRoutes: Array<Routers> = [
     action: RecruitInfo.updateRecruitInfo
   },
   {
-    path: '/production',
+    path: '/inset',
     method: 'get',
-    action: ProductionInfo.getProductionInfo
+    action: InsetInfo.getInsetInfo
   },
   {
-    path: '/production',
+    path: '/inset',
     method: 'post',
-    action: ProductionInfo.setProductionInfo
+    action: InsetInfo.setInsetInfo
   },
   {
-    path: '/production',
+    path: '/inset',
     method: 'delete',
-    action: ProductionInfo.deleteProduction
+    action: InsetInfo.deleteInset
   },
   {
-    path: '/production',
-    method: 'put',
-    action: ProductionInfo.updateProductionInfo
+    path: '/photo',
+    method: 'get',
+    action: PhotoInfo.getPhotoInfo
   },
+  {
+    path: '/photo',
+    method: 'post',
+    action: PhotoInfo.setPhotoInfo
+  },
+  {
+    path: '/photo',
+    method: 'delete',
+    action: PhotoInfo.deletePhoto
+  },
+  {
+    path: '/video',
+    method: 'get',
+    action: VideoInfo.getVideoInfo
+  },
+  {
+    path: '/video',
+    method: 'post',
+    action: VideoInfo.setVideoInfo
+  },
+  {
+    path: '/video',
+    method: 'put',
+    action: VideoInfo.updateVideoInfo
+  },
+  {
+    path: '/video',
+    method: 'delete',
+    action: VideoInfo.deleteVideo
+  }
 ]

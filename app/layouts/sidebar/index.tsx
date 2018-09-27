@@ -8,6 +8,7 @@ import {
 
 import './index.scss'
 
+const SubMenu = Menu.SubMenu
 
 const MenuItem = Menu.Item
 
@@ -26,11 +27,29 @@ export default class Sidebar extends React.Component<{}, { pathname: String, sid
       }, {
         icon: 'idcard',
         href: 'company',
-        text: '公司介绍'
+        text: '公司介绍',
       }, {
         icon: 'camera',
         href: 'production',
-        text: '作品'
+        text: '作品简介',
+        children: [{
+          icon: '',
+          href: 'production/inset',
+          text: '插画类作品'
+        }, {
+          icon: '',
+          href: 'production/cartoon',
+          text: '动画类作品',
+          children: [{
+            icon: '',
+            href: 'production/cartoon/video',
+            text: '视频类'
+          }, {
+            icon: '',
+            href: 'production/cartoon/photo',
+            text: '图片类'
+          }]
+        }]
       }, {
         icon: 'bars',
         href: 'activity',
@@ -62,9 +81,48 @@ export default class Sidebar extends React.Component<{}, { pathname: String, sid
     })
   }
 
+  public createMenu(obj) {
+    if(obj.children) {
+      const item = obj.icon ?(
+        <a href='javascript:void(0);'>
+          <Icon type={ obj.icon }/>
+          <div className='sidebar-menu-item-text' style={{ color: '#fff', fontSize: 14 }}>{ obj.text }</div>
+        </a>
+      ) : (
+        <a  href='javascript:void(0);' style={{ color: '#fff', fontSize: 14 }}>
+          { obj.text }
+        </a>
+      )
+      return (
+        <SubMenu
+          key={obj.href}
+          title={item}
+        >
+          { obj.children.map((item) => this.createMenu(item)) }
+        </SubMenu>
+      )
+    } else {
+
+      return (
+        <Menu.Item key={obj.href}>
+          { obj.icon ? (
+            <a style={{ color: '#fff', fontSize: 14 }} href={ `#/${obj.href}` } onClick={this.changeTab.bind(this, obj.href)}>
+              <Icon type={ obj.icon }/>
+              <div className='sidebar-menu-item-text' style={{ color: '#fff', fontSize: 14 }}>{ obj.text }</div>
+            </a>
+          ) : (
+            <a style={{ color: '#fff', fontSize: 14 }} href={ `#/${obj.href}` } onClick={this.changeTab.bind(this, obj.href)}>
+              { obj.text }
+            </a>
+          )}
+        </Menu.Item>
+      )
+    }
+  }
+
   public render() {
     const { menus, sidebarIsOpen, pathname } = this.state
-
+    const me = this
     return (
       <div className={`console-sidebar ${sidebarIsOpen ? 'open' : 'close'}`}>
         <div className='logo-box'>
@@ -73,22 +131,15 @@ export default class Sidebar extends React.Component<{}, { pathname: String, sid
             <Icon type={`${sidebarIsOpen ? 'left' : 'right'}`} className='sidebar-switch' onClick={ this.toggleSidebar.bind(this) }/>
           </div>
         </div>
-        <Menu className='sidebar-menu' selectedKeys={[pathname as string]}>
+        <Menu
+          mode="inline"
+          theme="dark"
+          className='sidebar-menu'
+          selectedKeys={[pathname as string]}
+        >
           {
             _.map(menus, (menu) => {
-              const item = (
-                <a href={ `#/${menu.href}` } onClick={this.changeTab.bind(this, menu.href)}>
-                  <Icon type={ menu.icon }/>
-                  <div className='sidebar-menu-item-text'>{ menu.text }</div>
-                </a>
-              );
-              return (
-                <MenuItem style={{ height: 48, paddingLeft: 32, marginTop: 10, fontSize: 16 }} className='sidebar-menu-item' key={menu.href}>
-                  {
-                    sidebarIsOpen ? item : <Tooltip title={menu.text} placement='right' key={menu.href}>{item}</Tooltip>
-                  }
-                </MenuItem>
-              );
+              return me.createMenu(menu)
             })
           }
         </Menu>

@@ -55,6 +55,30 @@ export default class Store {
     type: 'save'
   }
 
+  @observable inset = {
+    id: 0,
+    insetList: [],
+    insetModal: false,
+    insetLoading: true,
+    type: 'save'
+  }
+
+  @observable photo = {
+    id: 0,
+    photoList: [],
+    photoModal: false,
+    photoLoading: true,
+    type: 'save'
+  }
+
+  @observable video = {
+    id: 0,
+    videoList: [],
+    videoModal: false,
+    videoLoading: true,
+    type: 'save'
+  }
+
   /**
    * 获取新闻列表
    * @param data
@@ -225,6 +249,11 @@ export default class Store {
     }
   }
 
+  /**
+   * 更新公司文章
+   * @param data
+   * @returns {Promise<void>}
+   */
   @action.bound
   async updateCompany(data): Promise<void> {
     const res = await API.company.updateCompanyInfo(data)
@@ -418,6 +447,11 @@ export default class Store {
     }
   }
 
+  /**
+   * 更新招聘信息
+   * @param data
+   * @returns {Promise<void>}
+   */
   @action.bound
   async updateRecruit(data): Promise<void> {
     const res = await API.recruit.updateRecruitInfo(data)
@@ -431,62 +465,163 @@ export default class Store {
   }
 
   /**
-   * 获取作品文章
+   * 获取插画类作品信息
    * @param data
    * @returns {Promise<void>}
    */
   @action.bound
-  async getProduction(data): Promise<void> {
-    this.production.productionLoading = true
-    const res = await API.production.getProductionInfo({})
+  async getInset(data): Promise<void> {
+    this.inset.insetLoading = true
+    const res = await API.inset.getInsetInfo({})
     res.data.forEach((ret, i) => { ret['key'] = i + 1 })
-    this.production.productionList = res.data
-    this.production.productionLoading = false
+    this.inset.insetList = res.data
+    this.inset.insetLoading = false
   }
 
   /**
-   * 添加作品文章
+   * 添加插画类作品
    * @param data
    * @returns {Promise<void>}
    */
   @action.bound
-  async saveProduction(data): Promise<void> {
-    const res = await API.production.saveProductionInfo(data)
+  async saveInset(data): Promise<void> {
+    const res = await API.inset.saveInsetInfo(data)
+    if(res.statusNo) {
+      message.success('添加成功！')
+      this.inset.insetModal = false
+      await this.getInset({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 删除插画类作品
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async deleteInset(data): Promise<void> {
+    const res = await API.inset.deleteInsetInfo(data)
+    if(res.statusNo) {
+      message.success('删除轮播图成功！')
+      await this.getInset({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 获取图片类动画作品信息
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async getPhoto(data): Promise<void> {
+    this.photo.photoLoading = true
+    const res = await API.photo.getPhotoInfo({})
+    res.data.forEach((ret, i) => { ret['key'] = i + 1 })
+    this.photo.photoList = res.data
+    this.photo.photoLoading = false
+  }
+
+  /**
+   * 添加图片类动画作品
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async savePhoto(data): Promise<void> {
+    const res = await API.photo.savePhotoInfo(data)
+    if(res.statusNo) {
+      message.success('添加成功！')
+      this.photo.photoModal = false
+      await this.getPhoto({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 删除图片类动画作品
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async deletePhoto(data): Promise<void> {
+    const res = await API.photo.deletePhotoInfo(data)
+    if(res.statusNo) {
+      message.success('删除轮播图成功！')
+      await this.getPhoto({})
+    } else {
+      message.error(res.data)
+    }
+  }
+
+  /**
+   * 获取视频类动画作品信息
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async getVideo(data): Promise<void> {
+    this.video.videoLoading = true
+    const res = await API.video.getVideoInfo({})
+    res.data.forEach((ret, i) => { ret['key'] = i + 1 })
+    this.video.videoList = res.data
+    this.video.videoLoading = false
+  }
+
+  /**
+   * 添加视频类动画作品
+   * @param data
+   * @returns {Promise<void>}
+   */
+  @action.bound
+  async saveVideo(data): Promise<void> {
+    const res = await API.video.saveVideoInfo(data)
     if(res.statusNo) {
       message.success('添加公司文章成功！')
-      this.production.productionModal = false
-      await this.getProduction({})
+      this.video.videoModal = false
+      await this.getVideo({})
     } else {
       message.error(res.data)
     }
   }
 
   /**
-   * 删除作品文章
+   * 删除视频类动画作品
    * @param data
    * @returns {Promise<void>}
    */
   @action.bound
-  async deleteProduction(data): Promise<void> {
-    const res = await API.production.deleteProductionInfo(data)
+  async deleteVideo(data): Promise<void> {
+    const res = await API.video.deleteVideoInfo(data)
     if(res.statusNo) {
       message.success('删除公司文章成功！')
-      await this.getProduction({})
+      await this.getVideo({})
     } else {
       message.error(res.data)
     }
   }
 
+  /**
+   * 更新视频类动画作品
+   * @param data
+   * @returns {Promise<void>}
+   */
   @action.bound
-  async updateProduction(data): Promise<void> {
-    const res = await API.production.updateProductionInfo(data)
+  async updateVideo(data): Promise<void> {
+    const res = await API.video.updateVideoInfo(data)
     if(res.statusNo) {
       message.success('修改成功！')
-      this.production.productionModal = false
-      await this.getProduction({})
+      this.video.videoModal = false
+      await this.getVideo({})
     } else {
       message.error(res.data)
     }
   }
+
+
 
 }

@@ -1,20 +1,18 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm"
 
 @Entity()
-export class ProductionInfo {
+export class InsetInfo {
 
   @PrimaryGeneratedColumn()
   id: number
 
-  // 文章标题
+  // 标题
   @Column()
   title: string
 
-  // 文章内容
-  @Column('mediumtext',{
-    nullable: true
-  })
-  content: string
+  // 图片地址
+  @Column()
+  image: string
 
   // 创建时间
   @Column('timestamp')
