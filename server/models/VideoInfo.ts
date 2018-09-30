@@ -10,8 +10,10 @@ export class VideoInfo {
   @Column()
   title: string
 
-  // 图片地址
-  @Column()
+  // 视频代码
+  @Column('mediumtext',{
+    nullable: true
+  })
   code: string
 
   // 创建时间

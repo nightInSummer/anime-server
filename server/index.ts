@@ -73,9 +73,11 @@ createConnection({
   })
 
   // register all application routes
-  AppRoutes.forEach(route => router[route.method](route.path, curry(route.action)(packingResult)))
+  AppRoutes.forEach(route => router[route.method](route.path,() => {} ,curry(route.action)(packingResult)))
 
   app.use(cors())
+
+  console.log(111, router)
 
   // run app
   app.use(bodyParser())
