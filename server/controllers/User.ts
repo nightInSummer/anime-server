@@ -20,9 +20,8 @@ export async function login(ctx: Context): Promise<void> {
       user: user.name,
       token
     }
-
     ctx.cookies.set('u_c', JSON.stringify(ucCookie) as any, {
-      domain:'localhost',
+      domain: ctx.header.host.split(':')[0],
       path: '/',   //cookie写入的路径
       maxAge: 1000 * 60 * 60,
       expires: new Date(),
