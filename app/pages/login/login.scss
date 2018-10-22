@@ -1,0 +1,17 @@
+body {
+  background: #eee !important;
+  .login-container {
+    margin: 80px auto;
+    max-width: 380px;
+    min-height: 280px;
+    padding: 15px 35px 45px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    h2 {
+      margin: 30px 0;
+      font-size: 30px;
+      text-align: center;
+
+    }
+  }
+}

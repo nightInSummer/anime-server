@@ -3,7 +3,6 @@
  */
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const StyleLintPlugin = require('stylelint-bare-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
@@ -18,10 +17,6 @@ config.plugins = [
     filename: 'css/style.css',
     chunkFilename: 'css/style.css'
   }),
-  // new StyleLintPlugin({
-  //   syntax: 'scss',
-  //   failOnError: true
-  // }),
   new CopyWebpackPlugin([
     { from: './app/images', to: 'images' }
   ]),

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Table, Popconfirm, Form, Modal, Input } from 'antd'
+import { Button, Table, Popconfirm, Form, Modal, Input, Checkbox } from 'antd'
 import moment from 'moment'
 import Editor from '../component/editor'
 import {inject, observer} from "mobx-react"
@@ -79,17 +79,20 @@ class Company extends React.Component<any, any>{
 
   public submitData() {
     const result = this.props.form.getFieldsValue()
+    console.log(result)
     const { type } = this.props.company
     if(type === 'save') {
       this.props.saveCompany({
         title: result.title,
-        content: result.companyContent
+        content: result.companyContent,
+        member: result.member
       })
     } else if(type === 'edit') {
       this.props.updateCompany({
         id:  this.props.company.id,
         title: result.title,
-        content: result.companyContent
+        content: result.companyContent,
+        member: result.member
       })
     }
   }
@@ -103,7 +106,6 @@ class Company extends React.Component<any, any>{
 
   public async getOldContent(id) {
     const res = await API.company.getCompanyInfo({ id })
-    console.log(res)
     this.props.form.setFieldsValue({
       title: res.data[0].title,
       companyContent: res.data[0].content
@@ -154,6 +156,16 @@ class Company extends React.Component<any, any>{
                 initialValue: ''
               })(
                 <Editor visible={companyModal} />
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="成员介绍"
+            >
+              {getFieldDecorator('member', {
+                initialValue: ''
+              })(
+                <Checkbox>是否为成员介绍</Checkbox>
               )}
             </FormItem>
           </Form>

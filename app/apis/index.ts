@@ -6,5 +6,6 @@ import * as recruit from './recruit'
 import * as inset from './inset'
 import * as photo from './photo'
 import * as video from './video'
+import * as user from './user'
 
-export { news, sowing, company, activity, recruit, inset, photo, video }
+export { news, sowing, company, activity, recruit, inset, photo, video, user }

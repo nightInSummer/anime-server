@@ -6,6 +6,7 @@ import * as RecruitInfo from './controllers/Recruit'
 import * as InsetInfo from './controllers/Inset'
 import * as PhotoInfo from './controllers/Photo'
 import * as VideoInfo from './controllers/Video'
+import * as User from './controllers/User'
 
 
 
@@ -201,5 +202,15 @@ export const AppRoutes: Array<Routers> = [
     path: '/video',
     method: 'delete',
     action: VideoInfo.deleteVideo
+  },
+  {
+    path: '/login',
+    method: 'post',
+    action: User.login
+  },
+  {
+    path: '/userInfo',
+    method: 'get',
+    action: User.userInfo
   }
 ]

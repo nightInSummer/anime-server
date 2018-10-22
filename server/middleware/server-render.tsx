@@ -40,7 +40,8 @@ export default async function renderServer(ctx): Promise<void> {
     <div id="root">
   `)
 
-  const htmlString =  renderToNodeStream(
+
+  const htmlString = renderToNodeStream(
     <Provider store={ store }>
       <div className='console'>
         <Sidebar />
@@ -55,8 +56,9 @@ export default async function renderServer(ctx): Promise<void> {
       </div>
     </Provider>
   )
+
   await pipe(htmlString, ctx.res, {end: false})
-  ctx.res.write(`</div><script src="/${buildPath['home.js']}"></script><script src="/${buildPath['commons.js']}"></script></body></html>`)
+  ctx.res.write(`</div><script src="/public/${buildPath['home.js']}"></script><script src="/public/${buildPath['commons.js']}"></script></body></html>`)
   ctx.res.end()
 
 }

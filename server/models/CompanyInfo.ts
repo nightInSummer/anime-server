@@ -16,6 +16,10 @@ export class CompanyInfo {
   })
   content: string
 
+  // 是否为成员介绍
+  @Column()
+  member: boolean
+
   // 创建时间
   @Column('timestamp')
   createTime: Date

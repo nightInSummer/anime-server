@@ -22,31 +22,31 @@ export default class Sidebar extends React.Component<{}, { pathname: String, sid
       activeKey: '',
       menus: [{
         icon: 'home',
-        href: 'homepage',
+        href: 'page/homepage',
         text: '首页'
       }, {
         icon: 'idcard',
-        href: 'company',
+        href: 'page/company',
         text: '公司介绍',
       }, {
         icon: 'camera',
-        href: 'production',
+        href: 'page/production',
         text: '作品简介',
         children: [{
           icon: '',
-          href: 'production/inset',
+          href: 'page/production/inset',
           text: '插画类作品'
         }, {
           icon: '',
-          href: 'production/cartoon',
+          href: 'page/production/cartoon',
           text: '动画类作品',
           children: [{
             icon: '',
-            href: 'production/cartoon/video',
+            href: 'page/production/cartoon/video',
             text: '视频类'
           }, {
             icon: '',
-            href: 'production/cartoon/photo',
+            href: 'page/production/cartoon/photo',
             text: '图片类'
           }]
         }]

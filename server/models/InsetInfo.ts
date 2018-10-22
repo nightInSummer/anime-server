@@ -14,6 +14,10 @@ export class InsetInfo {
   @Column()
   image: string
 
+  // 缩略图地址
+  @Column()
+  breviary: string
+
   // 创建时间
   @Column('timestamp')
   createTime: Date

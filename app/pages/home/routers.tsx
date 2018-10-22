@@ -21,13 +21,13 @@ export default function Routers () {
       <Route path='/' component={Header}/>
       <Switch>
         <Route exact path='/' component={ HomePage } />
-        <Route exact path='/homepage' component={ HomePage } />
-        <Route exact path='/company' component={ Company } />
-        <Route exact path='/activity' component={ Activity } />
-        <Route exact path='/recruit' component={ Recruit } />
-        <Route exact path='/production/inset' component={ Inset } />
-        <Route exact path='/production/cartoon/video' component={ Video } />
-        <Route exact path='/production/cartoon/photo' component={ Photo } />
+        <Route exact path='/page/homepage' component={ HomePage } />
+        <Route exact path='/page/company' component={ Company } />
+        <Route exact path='/page/activity' component={ Activity } />
+        <Route exact path='/page/recruit' component={ Recruit } />
+        <Route exact path='/page/production/inset' component={ Inset } />
+        <Route exact path='/page/production/cartoon/video' component={ Video } />
+        <Route exact path='/page/production/cartoon/photo' component={ Photo } />
       </Switch>
     </React.Fragment>
   )

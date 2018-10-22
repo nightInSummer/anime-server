@@ -58,7 +58,8 @@ class Photo extends React.Component<any, any> {
     this.state = {
       previewVisible: false,
       previewImage: '',
-      fileList: []
+      fileList: [],
+      breviaryList: []
     }
   }
 
@@ -80,18 +81,21 @@ class Photo extends React.Component<any, any> {
 
   public submitData() {
     const result = this.props.form.getFieldsValue()
-    const { fileList } = this.state
+    const { fileList, breviaryList } = this.state
 
     this.props.savePhoto({
       title: result.title,
       url: result.url,
-      image: fileList[0].response[fileList[0].name]
+      image: fileList[0].response[fileList[0].name],
+      breviary: breviaryList[0].response[breviaryList[0].name]
     })
   }
 
   handleCancelUpload = () => this.setState({ previewVisible: false })
 
   handleChange = ({ fileList }) => this.setState({ fileList })
+
+  handleChangeBreviary = ({ fileList }) => this.setState({ breviaryList: fileList })
 
   handlePreview = (file) => {
     this.setState({
@@ -108,7 +112,7 @@ class Photo extends React.Component<any, any> {
     const { photoList, photoModal } = this.props.photo
     const { getFieldDecorator } = this.props.form
 
-    const { previewVisible, previewImage, fileList } = this.state
+    const { previewVisible, previewImage, fileList, breviaryList } = this.state
 
     const uploadButton = (
       <div>
@@ -156,7 +160,19 @@ class Photo extends React.Component<any, any> {
               >
                 {fileList.length >= 1 ? null : uploadButton}
               </Upload>
-
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="缩略图"
+            >
+              <Upload
+                action="/api/uploadImage"
+                listType="picture-card"
+                fileList={breviaryList}
+                onChange={this.handleChangeBreviary}
+              >
+                {breviaryList.length >= 1 ? null : uploadButton}
+              </Upload>
             </FormItem>
           </Form>
         </Modal>

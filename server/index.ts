@@ -7,16 +7,22 @@ import * as Router from "koa-router"
 import * as bodyParser from "koa-bodyparser"
 import { configure, getLogger } from "log4js"
 import * as koaStaticPlus from 'koa-static-plus'
+import * as koaJwt from 'koa-jwt'
 import {AppRoutes} from "./routes"
 import * as cors from 'koa-cors'
 import renderServer from './middleware/server-render'
+import renderLogin from './middleware/login-render'
 import * as uploader from 'koa2-file-upload'
-
 import * as _ from 'lodash'
 
 configure('configure.json')
 const logger = getLogger()
 const errLog = getLogger('err')
+
+
+// 秘钥
+const jwtSecret = 'jwtSecret'
+const tokenExpiresTime = 1000 * 60 * 60 * 24 * 7
 
 const curry = _.curry((a, b) => b(a))
 
@@ -78,6 +84,24 @@ createConnection({
   app.use(cors())
 
 
+  // power check
+  app.use((ctx, next) => {
+    return next().catch((err) => {
+      if (401 == err.status) {
+        ctx.status = 401
+        ctx.body = 'Protected resource, use Authorization header to get access\n'
+      } else {
+        throw err
+      }
+    })
+  })
+
+  // white list
+  app.use(koaJwt({secret: jwtSecret}).unless({
+    path:[/^\/api\/login/, /^\/login/, /^\/public/, /^\/page/, /^\/api\/uploadImage/]
+  }))
+
+
   // run app
   app.use(bodyParser())
   app.use(router.routes())
@@ -93,8 +117,18 @@ createConnection({
     pathPrefix: '/static'
   }))
 
-  // ssr middleware
-  app.use(renderServer)
+  // render login page
+  app.use(async (ctx) => {
+    if(ctx.url === '/login') {
+      await renderLogin(ctx)
+    } else {
+      await renderServer(ctx)
+    }
+
+  })
+
+  // // ssr middleware
+  // app.use(renderServer)
 
 
   app.listen(8000)
