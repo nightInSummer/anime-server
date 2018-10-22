@@ -212,5 +212,45 @@ export const AppRoutes: Array<Routers> = [
     path: '/userInfo',
     method: 'get',
     action: User.userInfo
+  },
+  {
+    path: '/web/news',
+    method: 'get',
+    action: NewsInfo.getNewsInfo
+  },
+  {
+    path: '/web/sowing',
+    method: 'get',
+    action: SowingInfo.getSowingInfo
+  },
+  {
+    path: '/web/company',
+    method: 'get',
+    action: CompanyInfo.getCompanyInfo
+  },
+  {
+    path: '/web/activity',
+    method: 'get',
+    action: ActivityInfo.getActivity
+  },
+  {
+    path: '/web/recruit',
+    method: 'get',
+    action: RecruitInfo.getRecruitInfo
+  },
+  {
+    path: '/web/inset',
+    method: 'get',
+    action: InsetInfo.getInsetInfo
+  },
+  {
+    path: '/web/photo',
+    method: 'get',
+    action: PhotoInfo.getPhotoInfo
+  },
+  {
+    path: '/web/video',
+    method: 'get',
+    action: VideoInfo.getVideoInfo
   }
 ]
