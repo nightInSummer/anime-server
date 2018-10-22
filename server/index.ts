@@ -98,7 +98,7 @@ createConnection({
 
   // white list
   app.use(koaJwt({secret: jwtSecret}).unless({
-    path:[/^\/api\/login/, /^\/login/, /^\/public/, /^\/page/, /^\/api\/uploadImage/]
+    path:[/^\/api\/login/, /^\/login/, /^\/public/, /^\/page/, /^\/api\/uploadImage/, /^\/api/]
   }))
 
 
