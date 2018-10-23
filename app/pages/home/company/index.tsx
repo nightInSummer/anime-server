@@ -79,7 +79,6 @@ class Company extends React.Component<any, any>{
 
   public submitData() {
     const result = this.props.form.getFieldsValue()
-    console.log(result)
     const { type } = this.props.company
     if(type === 'save') {
       this.props.saveCompany({
@@ -108,7 +107,8 @@ class Company extends React.Component<any, any>{
     const res = await API.company.getCompanyInfo({ id })
     this.props.form.setFieldsValue({
       title: res.data[0].title,
-      companyContent: res.data[0].content
+      companyContent: res.data[0].content,
+      member: res.data[0].member
     })
   }
 
@@ -163,7 +163,8 @@ class Company extends React.Component<any, any>{
               label="成员介绍"
             >
               {getFieldDecorator('member', {
-                initialValue: ''
+                initialValue: false,
+                valuePropName: 'checked'
               })(
                 <Checkbox>是否为成员介绍</Checkbox>
               )}
