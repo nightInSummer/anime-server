@@ -104,7 +104,6 @@ class Video extends React.Component<any, any>{
 
   public async getOldContent(id) {
     const res = await API.video.getVideoInfo({ id })
-    console.log(res)
     this.props.form.setFieldsValue({
       title: res.data[0].title,
       videoContent: res.data[0].code

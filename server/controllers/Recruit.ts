@@ -19,7 +19,6 @@ export async function setRecruitInfo(ctx: Context): Promise<void> {
 export async function publishRecruit(ctx: Context): Promise<void> {
   const recruitRepository = getManager().getRepository(RecruitInfo)
   const publishData = await recruitRepository.findOne({ status: 1 })
-  console.log(publishData)
   if(publishData) {
     await recruitRepository.update(publishData.id, { status: 0 })
   }

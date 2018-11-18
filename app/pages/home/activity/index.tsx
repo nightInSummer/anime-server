@@ -174,7 +174,6 @@ class Company extends React.Component<any, any>{
 
   public async getOldContentValue(id) {
     const res = await API.activity.getOldActivityValue({ id })
-    console.log(222, res.data[0].content)
     this.props.form.setFieldsValue({
       activityValueTitle: res.data[0].title,
       activityValueContent: res.data[0].content

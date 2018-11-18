@@ -18,8 +18,7 @@ export async function setNewsInfo(ctx: Context): Promise<void> {
 
 export async function publishNews(ctx: Context): Promise<void> {
   const newsRepository = getManager().getRepository(NewsInfo)
-  const publishData = await newsRepository.findOne({ status: 1 })
-  console.log(publishData)
+  const publishData = await newsRepository.findOne({ status: 1, type:  ctx.request.body.type})
   if(publishData) {
     await newsRepository.update(publishData.id, { status: 0 })
   }

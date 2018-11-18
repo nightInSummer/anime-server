@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Button, Table, Popconfirm, Form, Modal, Input } from 'antd'
+import { Button, Table, Popconfirm, Form, Modal, Input, Select } from 'antd'
 import moment from 'moment'
 import {inject, observer} from "mobx-react"
-import Editor from '../component/editor'
 import * as API from '../../../apis'
 import './news.scss'
 
 const FormItem = Form.Item
+const Option = Select.Option
 
 const formItemLayout = {
   labelCol: {
@@ -18,6 +18,8 @@ const formItemLayout = {
     sm: { span: 20 },
   }
 }
+
+const typeList = ['公司介绍', '活动', '插画类作品', '动画-视频类', '动画-图片类']
 
 @inject((res: any) => ({
   news: res.store.news,
@@ -35,9 +37,9 @@ class News extends React.Component<any, any> {
     title: '标题',
     dataIndex: 'title',
   }, {
-    title: '内容',
-    dataIndex: 'content',
-    render: (text) =>  `${(text || '').slice(0,50)}...`
+    title: '新闻类型',
+    dataIndex: 'type',
+    render: (text) =>  typeList[text]
   }, {
     title: '时间',
     dataIndex: 'createTime',
@@ -60,7 +62,7 @@ class News extends React.Component<any, any> {
       } else {
         return (
           <span>
-            <a href='javascript:;' onClick={ this.publishNews.bind(this, text) }>发布</a>
+            <a href='javascript:;' onClick={ this.publishNews.bind(this, text, record.type) }>发布</a>
              <a href='javascript:;' onClick={this.changeContent.bind(this, record.id)}>&nbsp;&nbsp;&nbsp;&nbsp;编辑</a>
             <Popconfirm title="确认删除?" onConfirm={ this.deleteNews.bind(this, text) } okText="是" cancelText="否">
              <a href='javascript:;'>&nbsp;&nbsp;&nbsp;&nbsp;删除</a>
@@ -92,8 +94,8 @@ class News extends React.Component<any, any> {
     this.props.deleteNews({ id })
   }
 
-  public publishNews(id) {
-    this.props.publishNews({ id })
+  public publishNews(id, type) {
+    this.props.publishNews({ id, type })
   }
 
   public handleCancel() {
@@ -106,13 +108,13 @@ class News extends React.Component<any, any> {
     if(type === 'save') {
       this.props.saveNews({
         title: result.title,
-        content: result.newsContent
+        type: result.type
       })
     } else if(type === 'edit') {
       this.props.updateNews({
         id:  this.props.news.id,
         title: result.title,
-        content: result.newsContent
+        type: result.type
       })
     }
   }
@@ -128,7 +130,7 @@ class News extends React.Component<any, any> {
     const res = await API.news.getNewsInfo({ id })
     this.props.form.setFieldsValue({
       title: res.data[0].title,
-      newsContent: res.data[0].content
+      type: res.data[0].type
     })
   }
 
@@ -154,7 +156,7 @@ class News extends React.Component<any, any> {
           visible={ newsModal }
           onCancel={ this.handleCancel.bind(this) }
           onOk={ this.submitData.bind(this) }
-          width={'1100px'}
+          width={'600px'}
           cancelText="取消"
           okText="确定"
         >
@@ -173,10 +175,20 @@ class News extends React.Component<any, any> {
               {...formItemLayout}
               label="新闻内容"
             >
-              {getFieldDecorator('newsContent', {
+              {getFieldDecorator('type', {
                 initialValue: ''
               })(
-                <Editor visible={newsModal} />
+                <Select
+                  style={{ width: 460 }}
+                  showSearch
+                  optionFilterProp='children'
+                >
+                  <Option value='0'>公司介绍</Option>
+                  <Option value='1'>活动</Option>
+                  <Option value='2'>插画类作品</Option>
+                  <Option value='3'>动画-视频类</Option>
+                  <Option value='4'>动画-图片类</Option>
+                </Select>
               )}
             </FormItem>
           </Form>

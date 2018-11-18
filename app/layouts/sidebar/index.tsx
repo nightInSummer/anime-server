@@ -69,7 +69,6 @@ export default class Sidebar extends React.Component<{}, { pathname: String, sid
   }
 
   public componentDidMount() {
-    console.log(_.gePathname())
     this.setState({
       pathname: _.gePathname()
     })

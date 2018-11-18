@@ -52,5 +52,4 @@ export async function userInfo(ctx: Context): Promise<void> {
 
   //使用jwt-simple自行解析数据
   let payload = jwt.decode(token.split(' ')[1], jwtSecret);
-  console.log(payload)
 }
