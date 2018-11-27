@@ -36,6 +36,9 @@ class Photo extends React.Component<any, any> {
       return <a href='javascript:;' onClick={ this.showPhoto.bind(this, text) }>查看</a>
     }
   }, {
+    title: '标签',
+    dataIndex: 'tag',
+  }, {
     title: '时间',
     dataIndex: 'createTime',
     render: (text) => moment(text).format('YYYY-MM-DD HH:mm:ss')
@@ -87,7 +90,8 @@ class Photo extends React.Component<any, any> {
       title: result.title,
       url: result.url,
       image: fileList[0].response[fileList[0].name],
-      breviary: breviaryList[0].response[breviaryList[0].name]
+      breviary: breviaryList[0].response[breviaryList[0].name],
+      tag: result.tag
     })
   }
 
@@ -173,6 +177,16 @@ class Photo extends React.Component<any, any> {
               >
                 {breviaryList.length >= 1 ? null : uploadButton}
               </Upload>
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="标签"
+            >
+              {getFieldDecorator('tag', {
+                initialValue: ''
+              })(
+                <Input placeholder="请输入标签名" />
+              )}
             </FormItem>
           </Form>
         </Modal>

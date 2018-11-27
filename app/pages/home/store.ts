@@ -1,7 +1,6 @@
 import { observable, action } from 'mobx'
 import { message } from "antd"
 import * as API from '../../apis'
-import * as _ from '../../../common/utils'
 
 export default class Store {
   @observable news = {

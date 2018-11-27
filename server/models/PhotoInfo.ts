@@ -18,6 +18,10 @@ export class PhotoInfo {
   @Column()
   breviary: string
 
+  // 标签
+  @Column()
+  tag: string
+
   // 创建时间
   @Column('timestamp')
   createTime: Date
