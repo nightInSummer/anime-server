@@ -52,11 +52,11 @@ export default class Sidebar extends React.Component<{}, { pathname: String, sid
         }]
       }, {
         icon: 'bars',
-        href: 'activity',
+        href: 'page/activity',
         text: '活动'
       }, {
         icon: 'calendar',
-        href: 'recruit',
+        href: 'page/recruit',
         text: '招聘'
       }]
     }
