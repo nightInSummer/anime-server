@@ -8,7 +8,7 @@ const tokenExpiresTime = 1000 * 60 * 60 * 24 * 7
 export async function login(ctx: Context): Promise<void> {
   const user = ctx.request.body
 
-  if (user.name === 'admin' && user.password === 'zuoying@2018'){
+  if (user.name === 'Tjzuoying' && user.password === 'Zuoydm@199'){
     let payload = {
       exp: Date.now() + tokenExpiresTime,
       name: user.name
